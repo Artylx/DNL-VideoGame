@@ -1,7 +1,7 @@
 # DNL-VideoGame
 
 ### Description
-Projet de jeu pour un concours de DNL sur l'ANZAC.
+Projet de jeu pour un concours de DNL sur l'ANZAC.\n
 **Type:** Jeu 2D
 **Langage:** JS, CSS, HTML
 
