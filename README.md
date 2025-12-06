@@ -1,7 +1,7 @@
 # DNL-VideoGame
 
 ### Description
-Projet de jeu pour un concours de DNL sur l'ANZAC.\n
+Projet de jeu pour un concours de DNL sur l'ANZAC.
 **Type:** Jeu 2D
 **Langage:** JS, CSS, HTML
 
@@ -19,3 +19,7 @@ Le player arrive sur le champ de bataille et il y a un gamplay avec un infirmier
 Le player se trouve chez lui avec ses parents. Il va avoir une autre série de questions et si il réussi c'est la victoire.
 #### Questions:
 - 
+
+## Applications techniques
+Le jeu devra être jouable sur un moteur de recherche sur ordinateur et sur telephone (compatibilité requise).
+Le CSS devra être responsive avec des graphisme créer pour le jeu.
