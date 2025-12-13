@@ -45,19 +45,6 @@
                     console.log('Fragment audio détecté dans l\'URL :', window.location.hash);
                 }
             }
-
-            // Listen for clicks on links to detect '#' in hrefs
-            document.body.addEventListener('click', function(e) {
-                var t = e.target;
-                var a = t.closest ? t.closest('a') : null;
-                if (a && a.href && a.href.indexOf('#') !== -1) {
-                    console.log('Lien avec # cliqué:', a.href);
-                    var frag = a.href.split('#')[1] || '';
-                    if (frag.toLowerCase().indexOf('audio') !== -1) {
-                        console.log('Lien cliqué avec fragment audio:', a.href);
-                    }
-                }
-            });
         })();
     </script>
 </html>
