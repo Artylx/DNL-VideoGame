@@ -27,7 +27,7 @@
     <script>
         // Detect if the current URL contains a hash and log or display it
         (function() {
-            function showHashInfo(message) {
+            function showInfo(message) {
                 var el = document.getElementById('hash-info');
                 if (el) {
                     el.style.display = 'block';
@@ -36,13 +36,8 @@
             }
 
             if (window.location.hash) {
-                var message = 'Hash détecté: ' + window.location.hash;
-                console.log(message);
-                showHashInfo(message);
-
-                // Detect specifically "#audio" (or any fragment containing "audio")
-                if (window.location.hash.toLowerCase().indexOf('#audio') !== -1 || window.location.hash.toLowerCase().indexOf('audio') !== -1) {
-                    console.log('Fragment audio détecté dans l\'URL :', window.location.hash);
+                if (window.location.hash == "#video") {
+                    showInfo("video hash detected");
                 }
             }
         })();
