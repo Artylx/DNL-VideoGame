@@ -1,0 +1,125 @@
+body {
+    --size-icon: 40px;
+}
+
+/* QR Code veiwer */
+.qrcode-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: var(--size-icon);
+    height: var(--size-icon);
+    border-radius: 5px;
+
+    z-index: 1;
+    user-select: none;
+}
+
+.qrcode-button::after {
+    content: "";
+    position: absolute;
+    inset: -5px; /* équivalent à +10px centré */
+    
+    background-color: #b4b4b4aa;
+    border-radius: 50%;
+    z-index: -1;
+
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.qrcode-button:hover::after {
+    transform: scale(1);
+}
+
+.icon-qrcode {
+    width: var(--size-icon);
+    height: var(--size-icon);
+    cursor: pointer;
+}
+
+.qrcode-container {
+    position: absolute;
+    top: -100vh;
+    left: 0px;
+
+    width: 100vw;
+    height: 100vh;
+    background-color: #66666652;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    transition: 0.5s ease;
+    user-select: none;
+}
+
+.qrcode-content {
+    margin: 300px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 30px;
+
+    width: 300px;
+}
+
+.close-btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #7979795e;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.close-btn::before,
+.close-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 3px;
+    background: white;
+    transform-origin: center;
+}
+
+.close-btn::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close-btn::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.close-btn:hover {
+    background: #c0392b;
+}
+
+.upload-btn {
+    background-color: rgb(136, 250, 212);
+    padding: 15px 30px 15px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    width: auto;
+}
+
+.upload-btn:hover {
+    background-color: rgb(104, 233, 192);
+}
+
+.upload-btn a {
+    text-decoration: none;
+    color: inherit;
+}

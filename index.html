@@ -3,28 +3,50 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Game DNL - Redirection</title>
+        <!-- Site icons -->
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/logo_dnl.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/logo_dnl.png">
+        <title>DNL - Redirection</title>
         <!-- <meta http-equiv="refresh" content="0; url=sites/game/index.html"> -->
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                margin-top: 20%;
-                background-color: #e7e7e7;
-            }
-
             p {
                 font-size: 1.2em;
                 color: #333;
             }
+
+            button {
+                margin: 10px;
+                padding: 10px 20px;
+                font-size: 1em;
+                background-color: #6ba6ff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                cursor: pointer;
+                color: #fff;
+            }
+
+            button:hover {
+                background-color: #4b84db;
+            }
+
+            .buttons-container {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+
+                width: 500px;
+            }
         </style>
+        <link rel="stylesheet" type="text/css" href="global-style.css">
     </head>
     <body>
         <p>Si la redirection vers l'autre page n'est pas automatique, rechargez la page ou selectionnez votre destination.</p>
         <h1>Redirection vers la page:</h1>
-        <button onclick="redirect('#chapter1')">Du chapitre 1</button>
-        <button onclick="redirect('#chapter2')">Du chapitre 2</button>
-        <button onclick="redirect('#game')">Du jeu</button>
+        <div class="buttons-container">
+            <button onclick="redirect('#chapter1')">Chapitre 1</button>
+            <button onclick="redirect('#chapter2')">Chapitre 2</button>
+            <button onclick="redirect('#game')">Jeu</button>
+        </div>
     </body>
     <script>
         function redirect(hash) {
@@ -33,15 +55,15 @@
             } else if (hash == "#chapter2") {
                 window.location.href = "sites/chapter2/index.html" + hash;
             } else if (hash == "#game") {
-                window.location.href = "sites/game/index.html";
+                window.location.href = "sites/game/index.html" + hash;
+            } else {
+                console.warn("Hash non reconnu pour la redirection:", hash);
             }
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             if (window.location.hash) {
-                if (window.location.hash == "#video") {
-                    showInfo("video hash detected");
-                }
+                redirect(window.location.hash);
             }
         });
     </script>
