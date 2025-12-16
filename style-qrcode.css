@@ -69,6 +69,19 @@ body {
     width: 300px;
 }
 
+.qrcode-image {
+    max-width: 90%;
+    width: 250px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #00000066;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .close-btn {
     position: relative;
     width: 40px;
