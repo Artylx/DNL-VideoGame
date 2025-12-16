@@ -71,7 +71,7 @@ body {
 
 .qrcode-image img {
     max-width: 90%;
-    width: 250px;
+    width: 500px;
     background: white;
     padding: 10px;
     border-radius: 15px;
