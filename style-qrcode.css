@@ -69,7 +69,7 @@ body {
     width: 300px;
 }
 
-.qrcode-image {
+.qrcode-image img {
     max-width: 90%;
     width: 250px;
     background: white;
