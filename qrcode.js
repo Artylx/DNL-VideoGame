@@ -1,3 +1,5 @@
+alert("qrcode.js loaded");
+
 function handleMissingQR() {
     console.clear();
     const img = document.querySelector(".qrcode-image img");
