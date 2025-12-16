@@ -1,9 +1,7 @@
-alert("qrcode.js loaded");
-
 function handleMissingQR() {
     console.clear();
     const img = document.querySelector(".qrcode-image img");
-    img.src = "/assets/img_error.png";
+    img.src = "/DNL-VideoGame/assets/img_error.png";
 
     document.querySelector(".upload-btn").innerHTML = "<p>Le QR Code est manquant.</p>";
 }
@@ -11,7 +9,7 @@ function handleMissingQR() {
 function init_qrcode(link_str) {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "/style-qrcode.css";
+    link.href = "/DNL-VideoGame/style-qrcode.css";
 
     document.head.appendChild(link);
 
