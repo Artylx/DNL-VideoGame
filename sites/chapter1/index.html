@@ -9,36 +9,14 @@
         <title>DNL - Chapitre 1</title>
 
         <style>
-            #loading-overlay {
-                position: fixed;
-                inset: 0;
-                background: #0e0e0e;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-            }
-
-            .loading-logo {
-                width: 120px;
-                animation: pulse 1s ease-in-out infinite;
-            }
-
-            @keyframes pulse {
-                0%   { opacity: 0.5; transform: scale(1); }
-                50%  { opacity: 1;   transform: scale(1.05); }
-                100% { opacity: 0.5; transform: scale(1); }
-            }
-
-            /* Transition de sortie */
-            #loading-overlay.hide {
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s ease;
-            }
+            
         </style>
 
         <script>
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = "/DNL-VideoGame/styles/style-qrcode.css";
+
             window.addEventListener("load", () => {
                 const overlay = document.getElementById("loading-overlay");
 
