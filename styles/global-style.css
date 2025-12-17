@@ -8,3 +8,9 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+h1 {
+    font-size: 1.4em;
+    color: #333;
+    font-weight: bold;
+}

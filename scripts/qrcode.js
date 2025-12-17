@@ -9,7 +9,7 @@ function handleMissingQR() {
 function init_qrcode(link_str) {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "/DNL-VideoGame/style-qrcode.css";
+    link.href = "/DNL-VideoGame/styles/style-qrcode.css";
 
     document.head.appendChild(link);
 
