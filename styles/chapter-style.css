@@ -1,4 +1,14 @@
 .text-chapter {
     font-size: 1.2em;
     color: #333;
+    margin: 0;
+}
+
+.text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0;
 }
