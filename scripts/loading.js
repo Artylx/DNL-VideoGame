@@ -4,10 +4,10 @@ link.href = "/DNL-VideoGame/styles/loading.css";
 
 window.addEventListener("load", () => {
     const overlay = document.createElement("div");
-    document.body.appendChild(div);
-    div.id = "loading-overlay";
+    document.body.appendChild(overlay);
+    overlay.id = "loading-overlay";
 
-    div.innerHTML = '<img src="/DNL-VideoGame/assets/logo_dnl.png" alt="Chargement" class="loading-logo">'
+    overlay.innerHTML = '<img src="/DNL-VideoGame/assets/logo_dnl.png" alt="Chargement" class="loading-logo">'
  
     const MIN_DURATION = 1000;
     const start = performance.now();
