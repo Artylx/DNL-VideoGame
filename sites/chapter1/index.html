@@ -13,36 +13,16 @@
         </style>
 
         <script>
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "/DNL-VideoGame/styles/style-qrcode.css";
-
-            window.addEventListener("load", () => {
-                const overlay = document.getElementById("loading-overlay");
-
-                const MIN_DURATION = 1000;
-                const start = performance.now();
-
-                const hide = () => {
-                    overlay.classList.add("hide");
-                    setTimeout(() => overlay.remove(), 300);
-                };
-
-                const elapsed = performance.now() - start;
-                const remaining = Math.max(0, MIN_DURATION - elapsed);
-
-                setTimeout(hide, remaining);
-            });
+            
         </script>
         <link rel="stylesheet" type="text/css" href="/DNL-VideoGame/styles/global-style.css">
         <link rel="stylesheet" type="text/css" href="/DNL-VideoGame/styles/chapter-style.css">
         <link rel="stylesheet" type="text/css" href="/DNL-VideoGame/styles/video-player.css">
+
+        <script src="/DNL-VideoGame/scripts/loading.js"></script>
+        <script src="/DNL-VideoGame/scripts/qrcode.js"></script>
     </head>
     <body>
-        <div id="loading-overlay">
-            <img src="/DNL-VideoGame/assets/logo_dnl.png" alt="Chargement" class="loading-logo">
-        </div>
-
         <h1>Chapitre 1 de DNL</h1>
         
         <div class="text-container">
@@ -54,5 +34,4 @@
 
         </div>
     </body>
-    <script src="/DNL-VideoGame/scripts/qrcode.js"></script>
 </html>
