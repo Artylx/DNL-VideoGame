@@ -4,12 +4,6 @@ link.href = "/DNL-VideoGame/styles/loading.css";
 
 document.head.appendChild(link);
 
-function end(overlay) {
-    overlay.remove()
-
-    document.body.style.visibility = "visible";
-}
-
 window.addEventListener("load", () => {
     const overlay = document.createElement("div");
     document.body.appendChild(overlay);
@@ -24,7 +18,8 @@ window.addEventListener("load", () => {
 
     const hide = () => {
         overlay.classList.add("hide");
-        setTimeout(() => end(overlay), 300);
+        document.body.style.visibility = "visible";
+        setTimeout(() => overlay.remove(), 300);
     };
 
     const elapsed = performance.now() - start;
