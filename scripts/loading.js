@@ -2,6 +2,8 @@ const link = document.createElement("link");
 link.rel = "stylesheet";
 link.href = "/DNL-VideoGame/styles/loading.css";
 
+document.head.appendChild(link);
+
 window.addEventListener("load", () => {
     const overlay = document.createElement("div");
     document.body.appendChild(overlay);
