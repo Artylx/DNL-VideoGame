@@ -1,7 +1,7 @@
 #loading-overlay {
     position: fixed;
     inset: 0;
-    background: #cecece;
+    background: #1a1a1a;
     display: flex;
     align-items: center;
     justify-content: center;
