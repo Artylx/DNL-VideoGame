@@ -4,10 +4,18 @@ link.href = "/DNL-VideoGame/styles/loading.css";
 
 document.head.appendChild(link);
 
+function end(overlay) {
+    overlay.remove()
+
+    document.body.style.visibility = "visible";
+}
+
 window.addEventListener("load", () => {
     const overlay = document.createElement("div");
     document.body.appendChild(overlay);
     overlay.id = "loading-overlay";
+
+    overlay.style.visibility = "visible";
 
     overlay.innerHTML = '<img src="/DNL-VideoGame/assets/logo_dnl.png" alt="Chargement" class="loading-logo">'
  
@@ -16,7 +24,7 @@ window.addEventListener("load", () => {
 
     const hide = () => {
         overlay.classList.add("hide");
-        setTimeout(() => overlay.remove(), 300);
+        setTimeout(() => end(overlay), 300);
     };
 
     const elapsed = performance.now() - start;
