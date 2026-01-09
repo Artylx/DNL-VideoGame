@@ -10,9 +10,12 @@
                 background-color: black;
                 margin: 0;
                 padding: 0;
+                overflow: hidden;
+                scrollbar-width: none; /* Firefox */
+                touch-action: none;
 
-                --size-joystick: 150px;
-                --size-joystick-clicker: 80px;
+                --size-joystick: 130px;
+                --size-joystick-clicker: 70px;
             }
 
             .joystick-container {
@@ -21,14 +24,16 @@
                 position: absolute;
                 bottom: 20px;
                 left: calc(50% - 100px / 2);
-                background-color: rgb(119, 119, 119);
+                background-color: rgba(119, 119, 119, 0.5);
+                border: 3px solid rgba(89, 89, 89, 0.5);
                 border-radius: 50%;
             }
 
             .joystick {
-                width: var(--size-joystick-clicker);
-                height: var(--size-joystick-clicker);
-                background-color: rgb(59, 59, 59);
+                width: calc(var(--size-joystick-clicker) - 3px * 2);
+                height: calc(var(--size-joystick-clicker) - 3px * 2);
+                background-color: rgb(36, 36, 36);
+                border: 3px solid rgba(2, 2, 2, 0.5);
                 position: relative;
                 top: calc(calc(var(--size-joystick) - var(--size-joystick-clicker)) / 2);
                 left: calc(calc(var(--size-joystick) - var(--size-joystick-clicker)) / 2);
@@ -82,7 +87,7 @@
                     const dy = pos.y - startY;
 
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    const maxDistance = 45;
+                    const maxDistance = 60;
 
                     if (distance <= maxDistance) {
                         knob.style.transform = `translate(${dx}px, ${dy}px)`;
@@ -111,5 +116,13 @@
         <div class="joystick-container">
             <div class="joystick"></div>
         </div>
+
+        <main class="game-container">
+
+        </main>
+
+        <!-- SCRIPTS -->
+        <script src="/DNL-VideoGame/scripts/loading.js"></script>
+        <script src="/DNL-VideoGame/sites/game/site/script/main.js"></script>
     </body>
 </html>
