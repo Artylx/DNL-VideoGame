@@ -8,15 +8,20 @@ let world = {
     height: 0
 };
 
-const player = {
+let player = {
     x: 150,
     y: 150,
-    speed: 6,
-    width: 60,
-    height: 90
+    speed: 0, 
+    speedRatio: 0.05, // 0.5% de la hauteur de la fenêtre par frame
+    
+    heightRatio: 0.10,   // 10% de la hauteur de la fenêtre
+    widthRatio: 0.6,
+
+    width: 0,
+    height: 0
 };
 
-const camera = {
+let camera = {
     x: 0,
     y: 0,
     width: gameContainer.clientWidth,
@@ -38,8 +43,8 @@ function initializeGame() {
     gameContainer.appendChild(background);
 
     playerObj = document.createElement('div');
-    playerObj.style.height = player.height + 'px';
-    playerObj.style.width = player.width + 'px';
+    playerObj.style.height = player.height;
+    playerObj.style.width = player.width;
     playerObj.style.position = 'absolute';
     playerObj.style.top = '0';
     playerObj.style.left = '0';
@@ -60,7 +65,23 @@ function sizeAdjustment() {
         height: background.naturalHeight * scale
     };
 
+    camera.width = gameContainer.clientWidth;
+    camera.height = gameContainer.clientHeight;
+
+    updatePlayerAdjustment();
+
+    console.log('Player: ', player);
     console.log('World size:', world);
+}
+
+function updatePlayerAdjustment() {
+    player.height = gameContainer.clientHeight * player.heightRatio;
+    player.width  = player.height * player.widthRatio;
+
+    player.speed = player.height * player.speedRatio;
+
+    playerObj.style.height = player.height + 'px';
+    playerObj.style.width  = player.width  + 'px';
 }
 
 window.addEventListener('resize', sizeAdjustment);
