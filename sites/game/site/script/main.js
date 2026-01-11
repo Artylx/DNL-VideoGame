@@ -1,5 +1,6 @@
 // GLOBAL VARIABLES
 const gameContainer = document.querySelector('.game-container');
+const joystickContainer = document.querySelector('.joystick-container');
 var background = NaN;
 var playerObj = NaN;
 
@@ -14,11 +15,13 @@ let player = {
     speed: 0, 
     speedRatio: 0.05, // 0.5% de la hauteur de la fenêtre par frame
     
-    heightRatio: 0.10,   // 10% de la hauteur de la fenêtre
-    widthRatio: 0.6,
+    sizeRatio: 0.09,   // 15% de la hauteur de la fenêtre
 
     width: 0,
-    height: 0
+    height: 0,
+
+    direction: 'none',
+    annimState: 0,
 };
 
 let camera = {
@@ -43,12 +46,21 @@ function initializeGame() {
     gameContainer.appendChild(background);
 
     playerObj = document.createElement('div');
+    playerObj.className = 'player-rect';
     playerObj.style.height = player.height;
     playerObj.style.width = player.width;
     playerObj.style.position = 'absolute';
     playerObj.style.top = '0';
     playerObj.style.left = '0';
-    playerObj.style.backgroundColor = 'white';
+
+    // playerObj.style.backgroundColor = 'white';
+    // playerObj.style.backgroundImage = 'url("/DNL-VideoGame/sites/game/site/assets/player_still.png")';
+    // playerObj.style.backgroundRepeat = 'no-repeat';
+    playerObj.style.zIndex = '0';
+
+    playerImg = document.createElement('div');
+    playerImg.className = 'player-object';
+    playerObj.appendChild(playerImg);
 
     gameContainer.appendChild(playerObj);
 
@@ -68,6 +80,9 @@ function sizeAdjustment() {
     camera.width = gameContainer.clientWidth;
     camera.height = gameContainer.clientHeight;
 
+    joystickContainer.style.bottom = '20px';
+    joystickContainer.style.left = ((gameContainer.clientWidth * 0.5) - (joystickContainer.clientWidth * 0.5)) + 'px';
+
     updatePlayerAdjustment();
 
     console.log('Player: ', player);
@@ -75,13 +90,17 @@ function sizeAdjustment() {
 }
 
 function updatePlayerAdjustment() {
-    player.height = gameContainer.clientHeight * player.heightRatio;
-    player.width  = player.height * player.widthRatio;
+    player.height = gameContainer.clientHeight * player.sizeRatio;
+    playerObj.style.height = player.height + 'px';
+
+    player.width  = player.height;
+    playerObj.style.width  = player.width  + 'px';
 
     player.speed = player.height * player.speedRatio;
 
-    playerObj.style.height = player.height + 'px';
-    playerObj.style.width  = player.width  + 'px';
+    
+    
+    //playerObj.style.backgroundSize = player.width + 'px ' + player.height + 'px';
 }
 
 window.addEventListener('resize', sizeAdjustment);
@@ -160,12 +179,21 @@ document.addEventListener('touchend', stopDrag);
 document.addEventListener('touchcancel', stopDrag);
 
 function updatePlayer() {
+    const prevX = player.x;
+    const prevY = player.y;
+
     player.x += inputX * player.speed;
     player.y += inputY * player.speed;
 
     // limites du MONDE
     player.x = Math.max(0, Math.min(world.width - player.width, player.x));
     player.y = Math.max(0, Math.min(world.height - player.height, player.y));
+
+    // déplacement réel
+    const movedX = player.x - prevX;
+    const movedY = player.y - prevY;
+
+    updatePlayerAnimation(movedX, movedY);
 }
 
 function updateCamera() {
@@ -176,13 +204,24 @@ function updateCamera() {
     camera.y = Math.max(0, Math.min(world.height - camera.height, camera.y));
 }
 
+function updatePlayerAnimation(dx, dy) {
+    const threshold = 0.01;
+
+    if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) {
+        player.state = 'idle';
+        return;
+    }
+
+    player.state = 'walk';
+    player.direction = dx > 0 ? 'right' : 'left';
+}
+
 function render() {
-    playerObj.style.transform = `
-        translate(
-            ${player.x - camera.x}px,
-            ${player.y - camera.y}px
-        )
-    `;
+    const flip = player.direction === 'left' ? -1 : 1;
+
+    playerObj.style.transform =
+        `translate(${player.x - camera.x}px, ${player.y - camera.y}px)
+        scaleX(${flip})`;
 
     background.style.transform = `
         translate(
@@ -190,6 +229,25 @@ function render() {
             ${-camera.y}px
         )
     `;
+
+    if (player.state !== 'idle') {
+        player.annimState += 1;
+
+        if (player.annimState < 10) {
+            playerImg.style.backgroundImage = 'url("/DNL-VideoGame/sites/game/site/assets/player_walk_1.png")';
+        }
+        else {
+            playerImg.style.backgroundImage = 'url("/DNL-VideoGame/sites/game/site/assets/player_walk_2.png")';
+        }
+
+        if (player.annimState >= 20) {
+            player.annimState = 0;
+        }
+    }
+    else {
+        player.annimState = 0;
+        playerImg.style.backgroundImage = 'url("/DNL-VideoGame/sites/game/site/assets/player_still.png")';
+    }
 }
 
 function gameLoop() {
