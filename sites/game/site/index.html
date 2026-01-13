@@ -23,7 +23,7 @@
                 height: var(--size-joystick);
                 position: absolute;
                 bottom: 20px;
-                left: calc(50% - 100px / 2);
+                left: calc(50% - var(--size-joystick) / 2);
                 background-color: rgba(119, 119, 119, 0.7);
                 border: 3px solid rgba(89, 89, 89, 0.7);
                 border-radius: 50%;
@@ -41,7 +41,7 @@
                 border-radius: 50%;
             }
 
-            .game-container {
+            #game {
                 width: 100vw;
                 height: 100vh;
                 user-select: none;
@@ -75,12 +75,10 @@
             <div class="joystick"></div>
         </div>
 
-        <main class="game-container">
-
-        </main>
+        <canvas id="game"></canvas>
 
         <!-- SCRIPTS -->
         <script src="/DNL-VideoGame/scripts/loading.js"></script>
-        <script src="/DNL-VideoGame/sites/game/site/script/main.js"></script>
+        <script type="module" src="/DNL-VideoGame/sites/game/site/script/main.js"></script>
     </body>
 </html>
