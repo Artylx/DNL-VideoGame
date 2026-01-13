@@ -10,7 +10,7 @@ export let playerRect = {
     speed: 1 * 0.5,
 
     direction: 'none', // "right", "left"
-    colliable: false,
+    colliable: true,
 }
 
 export let gameVar = {
