@@ -70,3 +70,37 @@ knob.addEventListener('touchstart', startDrag, { passive: false });
 document.addEventListener('touchmove', moveDrag, { passive: false });
 document.addEventListener('touchend', stopDrag);
 document.addEventListener('touchcancel', stopDrag);
+
+document.addEventListener("keydown", (event) => {
+  switch (event.key.toLowerCase()) {
+    case "z":
+      input.y = -1;
+      break;
+    case "s":
+      input.y = +1;
+      break;
+    case "q":
+      input.x = -1;
+      break;
+    case "d":
+      input.x = +1;
+      break;
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  switch (event.key.toLowerCase()) {
+    case "z":
+      input.y = 0;
+      break;
+    case "s":
+      input.y = 0;
+      break;
+    case "q":
+      input.x = 0;
+      break;
+    case "d":
+      input.x = 0;
+      break;
+  }
+});
