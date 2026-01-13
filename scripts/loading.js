@@ -4,6 +4,11 @@ link.href = "/DNL-VideoGame/styles/loading.css";
 
 document.head.appendChild(link);
 
+let MIN_DURATION = 1000;
+if (window.location.pathname === "/DNL-VideoGame/sites/game/site/index.html") {
+    MIN_DURATION = 3000;
+}
+
 window.addEventListener("load", () => {
     const overlay = document.createElement("div");
     document.body.appendChild(overlay);
@@ -13,7 +18,7 @@ window.addEventListener("load", () => {
 
     overlay.innerHTML = '<img src="/DNL-VideoGame/assets/logo_dnl.png" alt="Chargement" class="loading-logo">'
  
-    const MIN_DURATION = 1000;
+    
     const start = performance.now();
 
     const hide = () => {

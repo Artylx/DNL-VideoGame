@@ -1,0 +1,22 @@
+{
+  "questions": [
+    {
+      "title": "Titre de question exemple",
+      "interactValue": "q1",
+      "choice": [
+        { "text": "réponse exemple", "valid": false },
+        { "text": "réponse exemple", "valid": false },
+        { "text": "réponse exemple valide", "valid": true }
+      ]
+    },
+    {
+      "title": "Quelle est la capitale de la France ?",
+      "interactValue": "q2",
+      "choice": [
+        { "text": "Lyon", "valid": false },
+        { "text": "Paris", "valid": true },
+        { "text": "Marseille", "valid": false }
+      ]
+    }
+  ]
+}

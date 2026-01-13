@@ -15,13 +15,18 @@ export let playerRect = {
 
 export let gameVar = {
     state: "game",
-    questions: [
-        {title: "Titre exemple", interactValue: "q1", choice: [
-            {text: "reponse exemple", valid: false},
-            {text: "reponse exemple", valid: false},
-            {text: "reponse exemple valide", valid: true},
-        ]},
-    ]
+}
+
+async function loadQCM() {
+    const response = await fetch('/DNL-VideoGame/sites/game/site/script/qcm.json');
+    if (!response.ok) {
+        throw new Error("Erreur chargement QCM");
+    }
+    return await response.json();
+}
+let qcm = null;
+export async function initQCM() {
+    qcm = await loadQCM();
 }
 
 export const playerAnim = {
@@ -31,32 +36,32 @@ export const playerAnim = {
 };
 
 export const regions = [
-    { x: 160, y: 36, width: 25, height: 162, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 20, y: 32, width: 38, height: 14, died: false, interactEvent: "none", cancollide: true, img: "none"},
+    { x: 160, y: 36, width: 25, height: 162, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 20, y: 32, width: 38, height: 14, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
 
-    { x: 276, y: 0, width: 31, height: 45, died: true, interactEvent: "none", cancollide: false, img: "none"},
-    { x: 279, y: 45, width: 26, height: 55, died: true, interactEvent: "none", cancollide: false, img: "none"},
-    { x: 280, y: 100, width: 24, height: 59, died: true, interactEvent: "none", cancollide: false, img: "none"},
-    { x: 284, y: 187, width: 24, height: 13, died: true, interactEvent: "none", cancollide: false, img: "none"},
+    { x: 276, y: 0, width: 31, height: 45, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
+    { x: 279, y: 45, width: 26, height: 55, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
+    { x: 280, y: 100, width: 24, height: 59, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
+    { x: 284, y: 187, width: 24, height: 13, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
 
-    { x: 347, y: 131, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 400, y: 41, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 465, y: 93, width: 22, height: 106, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 545, y: 0, width: 22, height: 92, died: false, interactEvent: "none", cancollide: true, img: "none"},
+    { x: 347, y: 131, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 400, y: 41, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 465, y: 93, width: 22, height: 106, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 545, y: 0, width: 22, height: 92, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
     
-    { x: 568, y: 130, width: 163, height: 11, died: true, interactEvent: "none", cancollide: false, img: "none"},
-    { x: 545, y: 93, width: 22, height: 52, died: true, interactEvent: "none", cancollide: false, img: "none"},
+    { x: 568, y: 130, width: 163, height: 11, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
+    { x: 545, y: 93, width: 22, height: 52, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
     
-    { x: 624, y: 52, width: 177, height: 3, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 798, y: 54, width: 5, height: 24, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 794, y: 70, width: 26, height: 146, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 894, y: 0, width: 99, height: 51, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 915, y: 45, width: 62, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none"},
-    { x: 881, y: 165, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none"},
+    { x: 624, y: 52, width: 177, height: 3, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 798, y: 54, width: 5, height: 24, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 794, y: 70, width: 26, height: 146, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 894, y: 0, width: 99, height: 51, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 915, y: 45, width: 62, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 881, y: 165, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
 
-    { x: 990, y: 80, width: 10, height: 60, died: false, interactEvent: "end", cancollide: false, img: "none"},
+    { x: 990, y: 80, width: 10, height: 60, died: false, interactEvent: "end", cancollide: false, img: "none", enable: true},
 
-    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q1", cancollide: false, img: "first_man"},
+    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q2", cancollide: false, img: "first_man", enable: true},
 ];
 
 export const world = {
@@ -90,7 +95,6 @@ function rectIntersectAxis(a, b, axis) {
 }
 
 const interactBtn = document.querySelector(".interact-content");
-const question = NaN;
 
 function showInteractBtn(region) {
     if (interactBtn) {
@@ -99,24 +103,59 @@ function showInteractBtn(region) {
     }
 }
 
+function btnQcmEvent(q, r) {
+    if (r.valid) {
+        for (const region of regions) {
+            if (region.interactEvent === q.interactValue) {
+                region.enable = false;
+                leaveRegion(region);
+                break;
+            }
+        }
+    }
+    else {
+        gameVar.state = "gameOver";
+    }
+
+    contentQcm.classList.remove("show");
+    contentQcm.classList.add("hide");
+}
+
 const contentQcm = document.querySelector(".menu-question");
+const contentResp = contentQcm.querySelector(".resp-container");
 function interactBtnEvent() {
-    gameVar.questions.forEach(q => {
-        if (q.interactValue === currentRegion.interactValue) {
-            
-            contentGameOver.classList.remove("hide");
-            contentGameOver.classList.add("show");
+    for (const q of qcm.questions) {
+        if (q.interactValue === currentRegion.interactEvent) {
+            // ACTUALISER LES VALEURS
+            const title = contentQcm.querySelector(".title-q");
+            title.innerHTML = q.title;
+            contentResp.innerHTML = "";
+
+            for (const resp of q.choice) {
+                const btn = document.createElement('button');
+                btn.className = "btn";
+                btn.innerHTML = resp.text
+
+                btn.addEventListener("click", () => {
+                    btnQcmEvent(q, resp);
+                });
+                
+                contentResp.appendChild(btn);
+            }
+
+            // AFFICHER
+            contentQcm.classList.remove("hide");
+            contentQcm.classList.add("show");
             return;
         }
-    });
-
+    }
     console.error("Question is unfindable");
 }
 interactBtn.addEventListener("click", interactBtnEvent);
 
 var currentRegion = NaN;
 function regionEnter(region, axe) {
-    if (region.cancollide) {
+    if (region.cancollide && region.enable) {
         if (axe === "x") {
             if (input.x > 0) playerRect.x = region.x - playerRect.width;
             else if (input.x < 0) playerRect.x = region.x + region.width;
@@ -127,7 +166,7 @@ function regionEnter(region, axe) {
         }
     }
 
-    if (region.interactEvent !== "none" && currentRegion !== region) {
+    if (region.interactEvent !== "none" && currentRegion !== region && region.enable) {
         if (region.interactEvent === "end") {
             gameVar.state = "Ending";
         }
@@ -136,7 +175,7 @@ function regionEnter(region, axe) {
         }
     }
     
-    if (region.died) {
+    if (region.died && region.enable) {
         gameVar.state = "gameOver";
     }
 

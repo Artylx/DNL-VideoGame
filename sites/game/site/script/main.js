@@ -1,9 +1,9 @@
 import './controls.js';
-import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar } from './game.js';
+import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM } from './game.js';
 
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
-const btnGameOver = document.querySelector(".restart-btn");
+const btnGameOver = document.querySelector(".restart.btn");
 window.playerRect = playerRect;
 window.gameVar = gameVar;
 
@@ -101,7 +101,7 @@ function render() {
 
     // regions
     regions.forEach(o => {
-        if (window.drawing.regions) {
+        if (window.drawing.regions && o.enable) {
             if (o.cancollide) {
                 ctx.fillStyle = 'red';
             }
@@ -206,5 +206,6 @@ btnGameOver.addEventListener('click', () => resetVar());
 preloadAssets().then(loadedAssets => { 
     assets = loadedAssets;
     resetVar();
+    initQCM();
     requestAnimationFrame(gameLoop);
 });
