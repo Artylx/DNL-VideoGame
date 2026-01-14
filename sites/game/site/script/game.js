@@ -61,7 +61,7 @@ export const regions = [
 
     { x: 990, y: 80, width: 10, height: 60, died: false, interactEvent: "end", cancollide: false, img: "none", enable: true},
 
-    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q2", cancollide: false, img: "first_man", enable: true},
+    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q1", cancollide: false, img: "first_man", enable: true},
 ];
 
 export const world = {
