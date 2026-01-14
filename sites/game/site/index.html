@@ -16,6 +16,8 @@
 
                 --size-joystick: 130px;
                 --size-joystick-clicker: 70px;
+
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
 
             .joystick-container {
@@ -55,8 +57,6 @@
                 gap: 10%;
 
                 transition: 1s;
-
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
 
             .menu-question {
@@ -72,8 +72,6 @@
                 gap: 10%;
 
                 transition: 1s;
-
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
 
             .show {
@@ -167,6 +165,29 @@
                     transform: scale(1);
                 }
             }
+
+            .text-game {
+                position: absolute;
+                top: 25%;
+                left: 50%;
+
+                transform: translate(-50%, -50%);
+
+                color: white;
+                z-index: 10;
+
+                font-size: 2rem;
+                font-weight: bold;
+                text-align: center;
+
+                visibility: hidden;
+            }
+
+            #game {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         </style>
 
         <script>
@@ -180,7 +201,8 @@
             <div class="joystick"></div>
         </div>
 
-        <canvas id="game"></canvas>
+        <canvas id="game">
+        </canvas>
 
         <div class="menu-gameOver hide">
             <h1 class="title-gameOver">Game over</h1>
@@ -197,6 +219,8 @@
 
             </div>
         </div>
+
+        <p class="text-game">Veuillez sauver tous les blessé 0/3.</p>
 
         <!-- SCRIPTS -->
         <script src="/DNL-VideoGame/scripts/loading.js"></script>
