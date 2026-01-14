@@ -7,7 +7,7 @@ export let playerRect = {
     height: 5,
     width: 15,
 
-    speed: 1,
+    speed: 1 * 0.5,
 
     direction: 'none', // "right", "left"
     colliable: true,
