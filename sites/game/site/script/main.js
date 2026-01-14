@@ -172,21 +172,8 @@ function render() {
 
 let lastTime = performance.now();
 
-const values = [];
-const MAX_SAMPLES = 30;
-
 function gameLoop(time) {
     const deltaTime = Math.min(time - lastTime, 100) / 1000;
-    
-    values.push(deltaTime);
-    if (values.length > MAX_SAMPLES) {
-        values.shift();
-    }
-
-    const averageDelta =
-        values.reduce((a, b) => a + b, 0) / values.length;
-
-    setText(averageDelta.toFixed(3) + "s");
     lastTime = time;
 
     if (gameVar.state === "game") {
