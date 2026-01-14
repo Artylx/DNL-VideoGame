@@ -273,6 +273,11 @@ export function updateCamera() {
     }
 }
 
+const textElmt = document.querySelector(".text-game");
+export function setText(text) {
+    textElmt.innerHTML = text;
+}
+
 export function updatePlayerAnimation(deltaTime) {
     const moving = playerRect.direction !== 'none';
 

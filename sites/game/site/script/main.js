@@ -1,5 +1,5 @@
 import './controls.js';
-import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM } from './game.js';
+import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM, setText } from './game.js';
 
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
@@ -172,8 +172,21 @@ function render() {
 
 let lastTime = performance.now();
 
+const values = [];
+const MAX_SAMPLES = 30;
+
 function gameLoop(time) {
     const deltaTime = Math.min(time - lastTime, 100) / 1000;
+    
+    values.push(deltaTime);
+    if (values.length > MAX_SAMPLES) {
+        values.shift();
+    }
+
+    const averageDelta =
+        values.reduce((a, b) => a + b, 0) / values.length;
+
+    setText(averageDelta.toFixed(3) + "s");
     lastTime = time;
 
     if (gameVar.state === "game") {
