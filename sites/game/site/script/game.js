@@ -7,7 +7,7 @@ export let playerRect = {
     height: 5,
     width: 15,
 
-    speed: 1 * 0.5,
+    speed: 65,
 
     direction: 'none', // "right", "left"
     colliable: true,
@@ -32,7 +32,7 @@ export async function initQCM() {
 export const playerAnim = {
     frame: 0,
     timer: 0,
-    frameDuration: 150 // ms
+    frameDuration: 0.15 // s
 };
 
 export const regions = [
@@ -61,7 +61,7 @@ export const regions = [
 
     { x: 990, y: 80, width: 10, height: 60, died: false, interactEvent: "end", cancollide: false, img: "none", enable: true},
 
-    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q1", cancollide: false, img: "first_man", enable: true},
+    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q1", cancollide: false, img: "first_man.png", enable: true},
 ];
 
 export const world = {
@@ -187,13 +187,13 @@ function leaveRegion(region) {
     interactBtn.style.visibility = "hidden";
 }
 
-export function updatePlayer() {
+export function updatePlayer(deltaTime) {
     // Previous movements
     const prevX = playerRect.x;
     const prevY = playerRect.y;
 
     // Déplacement horizontal
-    playerRect.x += input.x * playerRect.speed;
+    playerRect.x += input.x * playerRect.speed * deltaTime;
 
     if (playerRect.colliable) {
         // Collision horizontale
@@ -216,7 +216,7 @@ export function updatePlayer() {
     }
     
     // Déplacement vertical
-    playerRect.y += input.y * playerRect.speed;
+    playerRect.y += input.y * playerRect.speed * deltaTime;
 
     if (playerRect.colliable) {
         // Collision verticale

@@ -20,6 +20,7 @@ const ASSETS = {
     playerWalk1: '/DNL-VideoGame/sites/game/site/assets/player_walk_1.png', 
     playerWalk2: '/DNL-VideoGame/sites/game/site/assets/player_walk_2.png',
     first_man: '/DNL-VideoGame/sites/game/site/assets/first_man.png',
+    second_man: '/DNL-VideoGame/sites/game/site/assets/second_man.png',
 }; 
 
 function loadImage(src) { 
@@ -101,35 +102,42 @@ function render() {
 
     // regions
     regions.forEach(o => {
-        if (window.drawing.regions && o.enable) {
-            if (o.cancollide) {
-                ctx.fillStyle = 'red';
+        if (o.enable) {
+            if (window.drawing.regions) {
+                if (o.cancollide) {
+                    ctx.fillStyle = 'red';
+                }
+                else if (o.died) {
+                    ctx.fillStyle = 'blue';
+                }
+                else {
+                    ctx.fillStyle = 'gray';
+                }
+                ctx.fillRect(o.x, o.y, o.width, o.height);
             }
-            else if (o.died) {
-                ctx.fillStyle = 'blue';
-            }
-            else {
-                ctx.fillStyle = 'gray';
-            }
-            ctx.fillRect(o.x, o.y, o.width, o.height);
         }
-        
+
         if (o.img !== "none") {
             let image = NamedNodeMap;
-
+            
             switch (o.img) {
-                case "first_man":
+                case "first_man.png":
                     image = assets.first_man;
+                    break;
+                case "second_man.png":
+                    image = assets.second_man;
                     break;
             }
 
-            ctx.drawImage(
-                image,
-                o.x,
-                o.y,
-                o.width,
-                o.height
-            );
+            if (image !== NamedNodeMap) {
+                ctx.drawImage(
+                    image,
+                    o.x,
+                    o.y,
+                    o.width,
+                    o.height
+                );
+            }
         }
     });
     
@@ -165,11 +173,11 @@ function render() {
 let lastTime = performance.now();
 
 function gameLoop(time) {
-    const deltaTime = Math.min(time - lastTime, 100);
+    const deltaTime = Math.min(time - lastTime, 100) / 1000;
     lastTime = time;
 
     if (gameVar.state === "game") {
-        updatePlayer();
+        updatePlayer(deltaTime);
         updateCamera();
         updatePlayerAnimation(deltaTime);
 
