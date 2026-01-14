@@ -6,7 +6,7 @@ document.head.appendChild(link);
 
 let MIN_DURATION = 1000;
 if (window.location.pathname === "/DNL-VideoGame/sites/game/site/index.html") {
-    MIN_DURATION = 3000;
+    MIN_DURATION = 1000;
 }
 
 window.addEventListener("load", () => {

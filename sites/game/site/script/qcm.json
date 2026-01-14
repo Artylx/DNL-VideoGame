@@ -1,12 +1,12 @@
 {
   "questions": [
     {
-      "title": "Titre de question exemple",
+      "title": "De quel couleur est le ciel ?",
       "interactValue": "q1",
       "choice": [
-        { "text": "réponse exemple", "valid": false },
-        { "text": "réponse exemple", "valid": false },
-        { "text": "réponse exemple valide", "valid": true }
+        { "text": "Bleu", "valid": true },
+        { "text": "Vert", "valid": false },
+        { "text": "Rouge", "valid": false }
       ]
     },
     {
