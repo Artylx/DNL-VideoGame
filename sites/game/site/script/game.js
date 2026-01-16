@@ -17,6 +17,13 @@ export let gameVar = {
     stage: "stage1",
 }
 
+export let drawing = {
+    playerRect: false,
+    player: true,
+    regions: false,
+    background: true,
+}
+
 async function load(link) {
     const response = await fetch(link);
     if (!response.ok) {

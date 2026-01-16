@@ -1,18 +1,13 @@
 import './controls.js';
-import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, applyState } from './game.js';
+import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, applyState, drawing } from './game.js';
 
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
 const btnGameOver = document.querySelector(".restart.btn");
+
 window.playerRect = playerRect;
 window.gameVar = gameVar;
-
-window.drawing = {
-    playerRect: false,
-    player: true,
-    regions: false,
-    background: true,
-}
+window.drawing = drawing;
 
 const ASSETS = { 
     background: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 

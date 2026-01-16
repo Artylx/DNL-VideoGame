@@ -23,8 +23,8 @@
       "interactValue": "q3",
       "choice": [
         { "text": "7", "valid": false },
-        { "text": "2", "valid": false },
-        { "text": "10", "valid": true }
+        { "text": "2", "valid": true },
+        { "text": "9", "valid": false }
       ]
     }
   ]
