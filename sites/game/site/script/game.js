@@ -218,8 +218,20 @@ export function updatePlayer(deltaTime) {
     }
 }
 
-const DEAD_ZONE_RATIO = 0.4;
+const DEAD_ZONE_RATIO = 0;
 export function updateCamera() {
+    
+    if (DEAD_ZONE_RATIO === 0) {
+        camera.x = Math.min(
+            Math.max(
+                playerRect.x + playerRect.width / 2 - camera.width / 2,
+                0
+            ),
+            world.width - camera.width
+        );
+        return;
+    }
+
     const deadZoneWidth = camera.width * DEAD_ZONE_RATIO;
     const deadZoneLeft  = camera.x + (camera.width - deadZoneWidth) / 2;
     const deadZoneRight = deadZoneLeft + deadZoneWidth;
