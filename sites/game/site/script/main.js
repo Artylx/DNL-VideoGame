@@ -1,5 +1,5 @@
 import './controls.js';
-import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM } from './game.js';
+import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, applyState } from './game.js';
 
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
@@ -20,6 +20,8 @@ const ASSETS = {
     playerWalk1: '/DNL-VideoGame/sites/game/site/assets/player_walk_1.png', 
     playerWalk2: '/DNL-VideoGame/sites/game/site/assets/player_walk_2.png',
     first_man: '/DNL-VideoGame/sites/game/site/assets/first_man.png',
+    second_man: '/DNL-VideoGame/sites/game/site/assets/second_man.png',
+    third_man: '/DNL-VideoGame/sites/game/site/assets/third_man.png',
 }; 
 
 function loadImage(src) { 
@@ -101,35 +103,45 @@ function render() {
 
     // regions
     regions.forEach(o => {
-        if (window.drawing.regions && o.enable) {
-            if (o.cancollide) {
-                ctx.fillStyle = 'red';
-            }
-            else if (o.died) {
-                ctx.fillStyle = 'blue';
-            }
-            else {
-                ctx.fillStyle = 'gray';
-            }
-            ctx.fillRect(o.x, o.y, o.width, o.height);
-        }
-        
-        if (o.img !== "none") {
-            let image = NamedNodeMap;
-
-            switch (o.img) {
-                case "first_man":
-                    image = assets.first_man;
-                    break;
+        if (o.enable) {
+            if (window.drawing.regions) {
+                if (o.cancollide) {
+                    ctx.fillStyle = 'red';
+                }
+                else if (o.died) {
+                    ctx.fillStyle = 'blue';
+                }
+                else {
+                    ctx.fillStyle = 'gray';
+                }
+                ctx.fillRect(o.x, o.y, o.width, o.height);
             }
 
-            ctx.drawImage(
-                image,
-                o.x,
-                o.y,
-                o.width,
-                o.height
-            );
+            if (o.img !== "none") {
+                let image = NamedNodeMap;
+
+                switch (o.img) {
+                    case "first_man.png":
+                        image = assets.first_man;
+                        break;
+                    case "second_man.png":
+                        image = assets.second_man;
+                        break;
+                    case "third_man.png":
+                        image = assets.third_man;
+                        break;
+                }
+
+                if (image !== NamedNodeMap) {
+                    ctx.drawImage(
+                        image,
+                        o.x,
+                        o.y,
+                        o.width,
+                        o.height
+                    );
+                }
+            }
         }
     });
     
@@ -168,44 +180,35 @@ function gameLoop(time) {
     const deltaTime = Math.min(time - lastTime, 100);
     lastTime = time;
 
-    if (gameVar.state === "game") {
-        updatePlayer();
-        updateCamera();
-        updatePlayerAnimation(deltaTime);
-
-        render();
-        if (contentGameOver.classList.contains("show")) {
-            contentGameOver.classList.remove("show");
-            contentGameOver.classList.add("hide");
-        }
-    }
-    else if (gameVar.state === "gameOver") {
+    if (gameVar.stage === "gameOver") {
         if (contentGameOver.classList.contains("hide")) {
             contentGameOver.classList.remove("hide");
             contentGameOver.classList.add("show");
         }
     }
-    
+    else {
+        if (contentGameOver.classList.contains("show")) {
+            contentGameOver.classList.remove("show");
+            contentGameOver.classList.add("hide");
+        }
+
+        if (gameVar.stage === "stage2") {
+            updatePlayer();
+            updateCamera();
+            updatePlayerAnimation(deltaTime);
+
+            render();
+        }
+    }
+
     requestAnimationFrame(time => gameLoop(time));
 }
 
-function resetVar() {
-    window.playerRect.x = 18;
-    window.playerRect.y = 100;
-
-    window.playerRect.direction = 'none';
-
-    window.gameVar.state = "game";
-
-    camera.x = 0
-    camera.y = 0
-}
-
-btnGameOver.addEventListener('click', () => resetVar());
+btnGameOver.addEventListener('click', () => applyState(gameVar.stage));
 
 preloadAssets().then(loadedAssets => { 
     assets = loadedAssets;
-    resetVar();
-    initQCM();
+    applyState("stage2");
+
     requestAnimationFrame(gameLoop);
 });

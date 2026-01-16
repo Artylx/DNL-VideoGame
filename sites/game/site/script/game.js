@@ -14,19 +14,22 @@ export let playerRect = {
 }
 
 export let gameVar = {
-    state: "game",
+    stage: "stage1",
 }
 
-async function loadQCM() {
-    const response = await fetch('/DNL-VideoGame/sites/game/site/script/qcm.json');
+async function load(link) {
+    const response = await fetch(link);
     if (!response.ok) {
         throw new Error("Erreur chargement QCM");
     }
     return await response.json();
 }
 let qcm = null;
-export async function initQCM() {
-    qcm = await loadQCM();
+export let regions = [];
+
+export async function init() {
+    qcm = await load('/DNL-VideoGame/sites/game/site/script/qcm.json');
+    regions = await load('/DNL-VideoGame/sites/game/site/script/regions.json');
 }
 
 export const playerAnim = {
@@ -34,35 +37,6 @@ export const playerAnim = {
     timer: 0,
     frameDuration: 150 // ms
 };
-
-export const regions = [
-    { x: 160, y: 36, width: 25, height: 162, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 20, y: 32, width: 38, height: 14, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-
-    { x: 276, y: 0, width: 31, height: 45, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
-    { x: 279, y: 45, width: 26, height: 55, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
-    { x: 280, y: 100, width: 24, height: 59, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
-    { x: 284, y: 187, width: 24, height: 13, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
-
-    { x: 347, y: 131, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 400, y: 41, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 465, y: 93, width: 22, height: 106, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 545, y: 0, width: 22, height: 92, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    
-    { x: 568, y: 130, width: 163, height: 11, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
-    { x: 545, y: 93, width: 22, height: 52, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
-    
-    { x: 624, y: 52, width: 177, height: 3, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 798, y: 54, width: 5, height: 24, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 794, y: 70, width: 26, height: 146, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 894, y: 0, width: 99, height: 51, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 915, y: 45, width: 62, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-    { x: 881, y: 165, width: 87, height: 22, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
-
-    { x: 990, y: 80, width: 10, height: 60, died: false, interactEvent: "end", cancollide: false, img: "none", enable: true},
-
-    { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q1", cancollide: false, img: "first_man", enable: true},
-];
 
 export const world = {
     width: 1000,
@@ -167,8 +141,8 @@ function regionEnter(region, axe) {
     }
 
     if (region.interactEvent !== "none" && currentRegion !== region && region.enable) {
-        if (region.interactEvent === "end") {
-            gameVar.state = "Ending";
+        if (region.interactEvent === "stage3") {
+            gameVar.stage = "stage3";
         }
         else {
             showInteractBtn(region);
@@ -176,7 +150,7 @@ function regionEnter(region, axe) {
     }
     
     if (region.died && region.enable) {
-        gameVar.state = "gameOver";
+        gameVar.stage = "gameOver";
     }
 
     currentRegion = region;
@@ -188,6 +162,8 @@ function leaveRegion(region) {
 }
 
 export function updatePlayer() {
+    if (regions == null) return 0;
+    
     // Previous movements
     const prevX = playerRect.x;
     const prevY = playerRect.y;
@@ -287,5 +263,24 @@ export function updatePlayerAnimation(deltaTime) {
     if (playerAnim.timer >= playerAnim.frameDuration) {
         playerAnim.timer = 0;
         playerAnim.frame = (playerAnim.frame + 1) % 2;
+    }
+}
+
+export function applyState(stage) {
+    window.gameVar.stage = stage;
+
+    if (stage === "stage2")
+    {
+        window.playerRect.x = 18;
+        window.playerRect.y = 100;
+
+        window.playerRect.direction = 'none';
+
+        camera.x = 0
+        camera.y = 0
+        init();
+    }
+    else {
+
     }
 }
