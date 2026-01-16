@@ -193,7 +193,7 @@ function gameLoop(time) {
         }
 
         if (gameVar.stage === "stage2") {
-            updatePlayer();
+            updatePlayer(deltaTime);
             updateCamera();
             updatePlayerAnimation(deltaTime);
 
@@ -204,7 +204,7 @@ function gameLoop(time) {
     requestAnimationFrame(time => gameLoop(time));
 }
 
-btnGameOver.addEventListener('click', () => applyState(gameVar.stage));
+btnGameOver.addEventListener('click', () => applyState("stage2"));
 
 preloadAssets().then(loadedAssets => { 
     assets = loadedAssets;

@@ -17,6 +17,15 @@
         { "text": "Paris", "valid": true },
         { "text": "Marseille", "valid": false }
       ]
+    },
+    {
+      "title": "Combien font 1+1 ?",
+      "interactValue": "q3",
+      "choice": [
+        { "text": "7", "valid": false },
+        { "text": "2", "valid": false },
+        { "text": "10", "valid": true }
+      ]
     }
   ]
 }

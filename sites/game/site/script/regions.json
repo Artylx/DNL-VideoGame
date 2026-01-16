@@ -219,7 +219,19 @@
         "width": 10, 
         "height": 60, 
         "died": false, 
-        "interactEvent": "end", 
+        "interactEvent": "stage3", 
+        "cancollide": false, 
+        "img": "none", 
+        "enable": true
+    },
+
+    {
+        "x": 488,
+        "y": 129,
+        "width": 57, 
+        "height": 21, 
+        "died": false, 
+        "interactEvent": "event1", 
         "cancollide": false, 
         "img": "none", 
         "enable": true
@@ -237,12 +249,23 @@
         "enable": true
     },
     {
+        "x": 325,
+        "y": 35,
+        "width": 61, 
+        "height": 36, 
+        "died": false, 
+        "interactEvent": "q2", 
+        "cancollide": false, 
+        "img": "third_man.png", 
+        "enable": true
+    },
+    {
         "x": 845,
         "y": 8,
         "width": 44, 
         "height": 44, 
         "died": false, 
-        "interactEvent": "q2", 
+        "interactEvent": "q3", 
         "cancollide": false, 
         "img": "second_man.png", 
         "enable": true

@@ -50,24 +50,6 @@ export const camera = {
     height: world.height
 };
 
-function rectIntersectAxis(a, b, axis) {
-    if (axis === 'x') {
-        return (
-            a.x < b.x + b.width &&
-            a.x + a.width > b.x &&
-            a.y + a.height > b.y &&
-            a.y < b.y + b.height
-        );
-    } else if (axis === 'y') {
-        return (
-            a.y < b.y + b.height &&
-            a.y + a.height > b.y &&
-            a.x + a.width > b.x &&
-            a.x < b.x + b.width
-        );
-    }
-}
-
 const interactBtn = document.querySelector(".interact-content");
 
 function showInteractBtn(region) {
@@ -88,7 +70,7 @@ function btnQcmEvent(q, r) {
         }
     }
     else {
-        gameVar.state = "gameOver";
+        gameVar.stage = "gameOver";
     }
 
     contentQcm.classList.remove("show");
@@ -144,8 +126,11 @@ function regionEnter(region, axe) {
         if (region.interactEvent === "stage3") {
             gameVar.stage = "stage3";
         }
-        else {
+        else if (region.interactEvent.includes("q")) {
             showInteractBtn(region);
+        }
+        else {
+            // NOTIONG ??
         }
     }
     
@@ -161,7 +146,7 @@ function leaveRegion(region) {
     interactBtn.style.visibility = "hidden";
 }
 
-export function updatePlayer() {
+export function updatePlayer(deltaTime) {
     if (regions == null) return 0;
     
     // Previous movements
