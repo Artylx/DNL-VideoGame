@@ -7,7 +7,7 @@ export let playerRect = {
     height: 5,
     width: 15,
 
-    speed: 1,
+    speed: 65,
 
     direction: 'none', // "right", "left"
     colliable: true,
@@ -35,7 +35,7 @@ export async function init() {
 export const playerAnim = {
     frame: 0,
     timer: 0,
-    frameDuration: 150 // ms
+    frameDuration: 0.15 // s
 };
 
 export const world = {
@@ -169,7 +169,7 @@ export function updatePlayer() {
     const prevY = playerRect.y;
 
     // Déplacement horizontal
-    playerRect.x += input.x * playerRect.speed;
+    playerRect.x += input.x * playerRect.speed * deltaTime;
 
     if (playerRect.colliable) {
         // Collision horizontale
@@ -192,7 +192,7 @@ export function updatePlayer() {
     }
     
     // Déplacement vertical
-    playerRect.y += input.y * playerRect.speed;
+    playerRect.y += input.y * playerRect.speed * deltaTime;
 
     if (playerRect.colliable) {
         // Collision verticale
@@ -247,6 +247,11 @@ export function updateCamera() {
             (camera.width + deadZoneWidth) / 2
         );
     }
+}
+
+const textElmt = document.querySelector(".text-game");
+export function setText(text) {
+    textElmt.innerHTML = text;
 }
 
 export function updatePlayerAnimation(deltaTime) {

@@ -177,7 +177,7 @@ function render() {
 let lastTime = performance.now();
 
 function gameLoop(time) {
-    const deltaTime = Math.min(time - lastTime, 100);
+    const deltaTime = Math.min(time - lastTime, 100) / 1000;
     lastTime = time;
 
     if (gameVar.stage === "gameOver") {
