@@ -1,5 +1,5 @@
 import './controls.js';
-import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM, setText } from './game.js';
+import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM, setText, resetRegions } from './game.js';
 
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
@@ -115,28 +115,28 @@ function render() {
                 }
                 ctx.fillRect(o.x, o.y, o.width, o.height);
             }
-        }
 
-        if (o.img !== "none") {
-            let image = NamedNodeMap;
-            
-            switch (o.img) {
-                case "first_man.png":
-                    image = assets.first_man;
-                    break;
-                case "second_man.png":
-                    image = assets.second_man;
-                    break;
-            }
+            if (o.img !== "none") {
+                let image = NamedNodeMap;
+                
+                switch (o.img) {
+                    case "first_man.png":
+                        image = assets.first_man;
+                        break;
+                    case "second_man.png":
+                        image = assets.second_man;
+                        break;
+                }
 
-            if (image !== NamedNodeMap) {
-                ctx.drawImage(
-                    image,
-                    o.x,
-                    o.y,
-                    o.width,
-                    o.height
-                );
+                if (image !== NamedNodeMap) {
+                    ctx.drawImage(
+                        image,
+                        o.x,
+                        o.y,
+                        o.width,
+                        o.height
+                    );
+                }
             }
         }
     });
@@ -207,6 +207,8 @@ function resetVar() {
 
     camera.x = 0
     camera.y = 0
+    
+    resetRegions();
 }
 
 btnGameOver.addEventListener('click', () => resetVar());

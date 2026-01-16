@@ -1,4 +1,4 @@
-import { input } from './controls.js';
+import { input, updateJoystick } from './controls.js';
 
 export let playerRect = {
     x: 18,
@@ -11,11 +11,11 @@ export let playerRect = {
 
     direction: 'none', // "right", "left"
     colliable: true,
-}
+};
 
 export let gameVar = {
     state: "game",
-}
+};
 
 async function loadQCM() {
     const response = await fetch('/DNL-VideoGame/sites/game/site/script/qcm.json');
@@ -23,11 +23,12 @@ async function loadQCM() {
         throw new Error("Erreur chargement QCM");
     }
     return await response.json();
-}
+};
+
 let qcm = null;
 export async function initQCM() {
     qcm = await loadQCM();
-}
+};
 
 export const playerAnim = {
     frame: 0,
@@ -35,9 +36,10 @@ export const playerAnim = {
     frameDuration: 0.15 // s
 };
 
-export const regions = [
+const regionsDef = [
     { x: 160, y: 36, width: 25, height: 162, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
     { x: 20, y: 32, width: 38, height: 14, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
+    { x: 108, y: 164, width: 39, height: 17, died: false, interactEvent: "none", cancollide: true, img: "none", enable: true},
 
     { x: 276, y: 0, width: 31, height: 45, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
     { x: 279, y: 45, width: 26, height: 55, died: true, interactEvent: "none", cancollide: false, img: "none", enable: true},
@@ -62,12 +64,18 @@ export const regions = [
     { x: 990, y: 80, width: 10, height: 60, died: false, interactEvent: "end", cancollide: false, img: "none", enable: true},
 
     { x: 337, y: 25, width: 47, height: 32, died: false, interactEvent: "q1", cancollide: false, img: "first_man.png", enable: true},
+    { x: 843, y: 9, width: 44, height: 44, died: false, interactEvent: "q2", cancollide: false, img: "second_man.png", enable: true},
 ];
+
+export let regions;
+export function resetRegions() {
+    regions = structuredClone(regionsDef);
+}
 
 export const world = {
     width: 1000,
     height: 200,
-}
+};
 
 export const camera = {
     x: 0,
@@ -271,6 +279,8 @@ export function updateCamera() {
             (camera.width + deadZoneWidth) / 2
         );
     }
+
+    updateJoystick();
 }
 
 const textElmt = document.querySelector(".text-game");

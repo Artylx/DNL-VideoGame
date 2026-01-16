@@ -61,6 +61,11 @@ function moveDrag(e) {
     `;
 }
 
+export function updateJoystick() {
+    // joystick.style.bottom = "20px";
+
+}
+
 // events
 knob.addEventListener('mousedown', startDrag);
 document.addEventListener('mousemove', moveDrag);
