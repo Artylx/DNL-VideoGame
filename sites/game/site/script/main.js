@@ -1,18 +1,13 @@
 import './controls.js';
-import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, initQCM, setText, resetRegions } from './game.js';
+import { updatePlayer, updateCamera, playerRect, world, camera, regions, updatePlayerAnimation, playerAnim, gameVar, applyState, drawing } from './game.js';
 
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
 const btnGameOver = document.querySelector(".restart.btn");
+
 window.playerRect = playerRect;
 window.gameVar = gameVar;
-
-window.drawing = {
-    playerRect: false,
-    player: true,
-    regions: false,
-    background: true,
-}
+window.drawing = drawing;
 
 const ASSETS = { 
     background: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
@@ -21,6 +16,7 @@ const ASSETS = {
     playerWalk2: '/DNL-VideoGame/sites/game/site/assets/player_walk_2.png',
     first_man: '/DNL-VideoGame/sites/game/site/assets/first_man.png',
     second_man: '/DNL-VideoGame/sites/game/site/assets/second_man.png',
+    third_man: '/DNL-VideoGame/sites/game/site/assets/third_man.png',
 }; 
 
 function loadImage(src) { 
@@ -118,13 +114,16 @@ function render() {
 
             if (o.img !== "none") {
                 let image = NamedNodeMap;
-                
+
                 switch (o.img) {
                     case "first_man.png":
                         image = assets.first_man;
                         break;
                     case "second_man.png":
                         image = assets.second_man;
+                        break;
+                    case "third_man.png":
+                        image = assets.third_man;
                         break;
                 }
 
@@ -176,46 +175,35 @@ function gameLoop(time) {
     const deltaTime = Math.min(time - lastTime, 100) / 1000;
     lastTime = time;
 
-    if (gameVar.state === "game") {
-        updatePlayer(deltaTime);
-        updateCamera();
-        updatePlayerAnimation(deltaTime);
-
-        render();
-        if (contentGameOver.classList.contains("show")) {
-            contentGameOver.classList.remove("show");
-            contentGameOver.classList.add("hide");
-        }
-    }
-    else if (gameVar.state === "gameOver") {
+    if (gameVar.stage === "gameOver") {
         if (contentGameOver.classList.contains("hide")) {
             contentGameOver.classList.remove("hide");
             contentGameOver.classList.add("show");
         }
     }
-    
+    else {
+        if (contentGameOver.classList.contains("show")) {
+            contentGameOver.classList.remove("show");
+            contentGameOver.classList.add("hide");
+        }
+
+        if (gameVar.stage === "stage2") {
+            updatePlayer(deltaTime);
+            updateCamera();
+            updatePlayerAnimation(deltaTime);
+
+            render();
+        }
+    }
+
     requestAnimationFrame(time => gameLoop(time));
 }
 
-function resetVar() {
-    window.playerRect.x = 18;
-    window.playerRect.y = 100;
-
-    window.playerRect.direction = 'none';
-
-    window.gameVar.state = "game";
-
-    camera.x = 0
-    camera.y = 0
-    
-    resetRegions();
-}
-
-btnGameOver.addEventListener('click', () => resetVar());
+btnGameOver.addEventListener('click', () => applyState("stage2"));
 
 preloadAssets().then(loadedAssets => { 
     assets = loadedAssets;
-    resetVar();
-    initQCM();
+    applyState("stage2");
+
     requestAnimationFrame(gameLoop);
 });
