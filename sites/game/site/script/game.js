@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { input, hideJoystick, showJoystick } from './controls.js';
+=======
+import { input, updateJoystick } from './controls.js';
+>>>>>>> 3de65397ea003559ac6298c6879f20a514232a62
 
 export let playerRect = {
     x: 18,
@@ -11,7 +15,7 @@ export let playerRect = {
 
     direction: 'none', // "right", "left"
     colliable: true,
-}
+};
 
 export let gameVar = {
     stage: "stage1",
@@ -30,7 +34,8 @@ async function load(link) {
         throw new Error("Erreur chargement QCM");
     }
     return await response.json();
-}
+};
+
 let qcm = null;
 export let regions = [];
 
@@ -46,6 +51,7 @@ export const playerAnim = {
 };
 
 export const world = {
+<<<<<<< HEAD
     world1: {
         width: 500,
         height: 200,
@@ -58,6 +64,11 @@ export const world = {
 
     }
 }
+=======
+    width: 1000,
+    height: 200,
+};
+>>>>>>> 3de65397ea003559ac6298c6879f20a514232a62
 
 export const camera = {
     x: 0,
@@ -352,8 +363,20 @@ export function updatePlayer(deltaTime) {
     }
 }
 
-const DEAD_ZONE_RATIO = 0.4;
+const DEAD_ZONE_RATIO = 0;
 export function updateCamera() {
+    
+    if (DEAD_ZONE_RATIO === 0) {
+        camera.x = Math.min(
+            Math.max(
+                playerRect.x + playerRect.width / 2 - camera.width / 2,
+                0
+            ),
+            world.width - camera.width
+        );
+        return;
+    }
+
     const deadZoneWidth = camera.width * DEAD_ZONE_RATIO;
     const deadZoneLeft  = camera.x + (camera.width - deadZoneWidth) / 2;
     const deadZoneRight = deadZoneLeft + deadZoneWidth;
@@ -374,6 +397,8 @@ export function updateCamera() {
             (camera.width + deadZoneWidth) / 2
         );
     }
+
+    updateJoystick();
 }
 
 const textElmt = document.querySelector(".text-game");
