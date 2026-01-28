@@ -104,3 +104,11 @@ document.addEventListener("keyup", (event) => {
       break;
   }
 });
+
+export function hideJoystick() {
+    joystick.style.display = 'none';
+}
+
+export function showJoystick() {
+    joystick.style.display = 'block';
+}

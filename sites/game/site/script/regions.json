@@ -8,7 +8,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 1
     },
     {
         "x": 20,
@@ -19,7 +20,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 2
     },
     {
         "x": 110,
@@ -30,7 +32,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 3
     },
 
     {
@@ -42,7 +45,8 @@
         "interactEvent": "none", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 4
     },
     {
         "x": 279,
@@ -53,7 +57,8 @@
         "interactEvent": "none", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 5
     },
     {
         "x": 280,
@@ -64,7 +69,8 @@
         "interactEvent": "none", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 6
     },
     {
         "x": 284,
@@ -75,7 +81,8 @@
         "interactEvent": "none", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 7
     },
 
     {
@@ -87,7 +94,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 8
     },
     {
         "x": 400,
@@ -98,7 +106,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 9
     },
     {
         "x": 465,
@@ -109,7 +118,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 10
     },
     {
         "x": 545,
@@ -120,7 +130,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 12
     },
 
     {
@@ -132,7 +143,8 @@
         "interactEvent": "none", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 13
     },
     {
         "x": 545,
@@ -143,7 +155,8 @@
         "interactEvent": "none", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 14
     },
 
     {
@@ -155,7 +168,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 15
     },
     {
         "x": 798,
@@ -166,7 +180,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 16
     },
     {
         "x": 794,
@@ -177,7 +192,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 17
     },
     {
         "x": 894,
@@ -188,7 +204,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 18
     },
     {
         "x": 915,
@@ -199,7 +216,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 19
     },
     {
         "x": 881,
@@ -210,7 +228,8 @@
         "interactEvent": "none", 
         "cancollide": true, 
         "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 20
     },
 
     {
@@ -222,19 +241,8 @@
         "interactEvent": "stage3", 
         "cancollide": false, 
         "img": "none", 
-        "enable": true
-    },
-
-    {
-        "x": 488,
-        "y": 129,
-        "width": 57, 
-        "height": 21, 
-        "died": false, 
-        "interactEvent": "event1", 
-        "cancollide": false, 
-        "img": "none", 
-        "enable": true
+        "enable": true,
+        "id": 21
     },
 
     {
@@ -243,10 +251,11 @@
         "width": 47, 
         "height": 32, 
         "died": false, 
-        "interactEvent": "q1", 
+        "interactEvent": "q4", 
         "cancollide": false, 
         "img": "first_man.png", 
-        "enable": true
+        "enable": true,
+        "id": 23
     },
     {
         "x": 325,
@@ -254,10 +263,35 @@
         "width": 61, 
         "height": 36, 
         "died": false, 
-        "interactEvent": "q2", 
+        "interactEvent": "q5", 
         "cancollide": false, 
         "img": "third_man.png", 
-        "enable": true
+        "enable": true,
+        "id": 24
+    },
+    {
+        "x": 446,
+        "y": 126,
+        "width": 7, 
+        "height": 4, 
+        "died": false, 
+        "interactEvent": "none", 
+        "cancollide": false, 
+        "img": "bullet.png", 
+        "enable": false,
+        "id": 25
+    },
+    {
+        "x": 442,
+        "y": 120,
+        "width": 14, 
+        "height": 16, 
+        "died": false, 
+        "interactEvent": "none", 
+        "cancollide": false, 
+        "img": "none", 
+        "enable": true,
+        "id": 27
     },
     {
         "x": 845,
@@ -265,9 +299,10 @@
         "width": 44, 
         "height": 44, 
         "died": false, 
-        "interactEvent": "q3", 
+        "interactEvent": "q6", 
         "cancollide": false, 
         "img": "second_man.png", 
-        "enable": true
+        "enable": true,
+        "id": 26
     }
 ]

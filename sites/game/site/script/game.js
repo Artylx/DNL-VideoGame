@@ -1,4 +1,4 @@
-import { input } from './controls.js';
+import { input, hideJoystick, showJoystick } from './controls.js';
 
 export let playerRect = {
     x: 18,
@@ -7,7 +7,7 @@ export let playerRect = {
     height: 5,
     width: 15,
 
-    speed: 65,
+    speed: 65, // 65
 
     direction: 'none', // "right", "left"
     colliable: true,
@@ -46,15 +46,24 @@ export const playerAnim = {
 };
 
 export const world = {
-    width: 1000,
-    height: 200,
+    world1: {
+        width: 500,
+        height: 200,
+    },
+    world2: {
+        width: 1000,
+        height: 200,
+    },
+    world3: {
+
+    }
 }
 
 export const camera = {
     x: 0,
     y: 0,
-    width: world.width,
-    height: world.height
+    width: world.world1.width,
+    height: world.world1.height
 };
 
 const interactBtn = document.querySelector(".interact-content");
@@ -66,10 +75,10 @@ function showInteractBtn(region) {
     }
 }
 
-function btnQcmEvent(q, r) {
+function btnQcmEvent(question, r) {
     if (r.valid) {
         for (const region of regions) {
-            if (region.interactEvent === q.interactValue) {
+            if (region.interactEvent === question.interactValue) {
                 region.enable = false;
                 leaveRegion(region);
                 break;
@@ -82,25 +91,42 @@ function btnQcmEvent(q, r) {
 
     contentQcm.classList.remove("show");
     contentQcm.classList.add("hide");
+
+    q = false;
 }
 
 const contentQcm = document.querySelector(".menu-question");
 const contentResp = contentQcm.querySelector(".resp-container");
-function interactBtnEvent() {
-    for (const q of qcm.questions) {
-        if (q.interactValue === currentRegion.interactEvent) {
+
+function btnInteractEvent() {
+    if (currentRegion) {
+        startQuestion(currentRegion.interactEvent);
+    }
+}
+
+var currentQ = 0;
+var q = false;
+
+function startQuestion(interactValue) {
+    if (qcm == null) {
+        console.error("QCM not loaded");
+        return false;
+    }
+
+    for (const question of qcm.questions) {
+        if (question.interactValue === interactValue) {
             // ACTUALISER LES VALEURS
             const title = contentQcm.querySelector(".title-q");
-            title.innerHTML = q.title;
+            title.innerHTML = question.title;
             contentResp.innerHTML = "";
 
-            for (const resp of q.choice) {
+            for (const resp of question.choice) {
                 const btn = document.createElement('button');
                 btn.className = "btn";
                 btn.innerHTML = resp.text
 
                 btn.addEventListener("click", () => {
-                    btnQcmEvent(q, resp);
+                    btnQcmEvent(question, resp);
                 });
                 
                 contentResp.appendChild(btn);
@@ -109,12 +135,118 @@ function interactBtnEvent() {
             // AFFICHER
             contentQcm.classList.remove("hide");
             contentQcm.classList.add("show");
-            return;
+
+            q = true;
+            return true;
         }
     }
-    console.error("Question is unfindable");
+    return false;
 }
-interactBtn.addEventListener("click", interactBtnEvent);
+interactBtn.addEventListener("click", btnInteractEvent());
+
+const EVENT_BULLET = "event1";
+let eventVar = {
+    current: "none",
+    timeout: 0,
+    time: 30,
+}
+
+function startEvent(event) {
+
+}
+
+
+export function eventTick(delta) {
+    if (gameVar.stage === "stage2") {
+        eventVar.time -= 10 * delta;
+
+        if (eventVar.time <= 0) {
+            eventVar.time = 30;
+            eventVar.current = EVENT_BULLET;
+            eventVar.timeout = 100;
+
+            const regionBullet = regions.find(o => o.id === 25);
+
+            regionBullet.x = 446;
+            regionBullet.y = 126;
+            regionBullet.enable = false;
+        }
+
+        if (eventVar.current === "none") return;
+
+        switch (eventVar.current) {
+            case EVENT_BULLET:
+                handleBulletEvent(delta);
+                break;
+        }
+    }
+    else if (gameVar.stage === "stage1") {
+        if (!q) {
+            currentQ += 1;
+
+            if (currentQ >= 4) {
+                applyStage("stage2");
+                return;
+            }
+            if (!startQuestion("q" + currentQ)) {
+                currentQ -= 1;
+            }
+        }
+    }
+    else if (gameVar.stage === "stage3") {
+        if (!q) {
+            currentQ += 1;
+
+            if (currentQ >= 10) {
+                applyStage("stage4");
+                return;
+            }
+            if (!startQuestion("q" + currentQ)) {
+                currentQ -= 1;
+            }
+        }
+    }
+}
+
+function handleBulletEvent(delta) {
+    const regionBullet = regions.find(o => o.id === 25);
+    const regionFire = regions.find(o => o.id === 27);
+
+    if (!regionBullet) return;
+
+    eventVar.timeout -= 100 * delta;
+    if (eventVar.timeout > 0) {
+        if (eventVar.timeout <= 10) {
+            regionFire.enable = true;
+            regionFire.img = "flame0.png";
+        }
+        return;
+    }
+    else {
+        if (eventVar.timeout < -30) {
+            regionFire.enable = false;
+        }
+        else if (eventVar.timeout < -20) {
+            regionFire.img = "flame3.png";
+        }
+        else if (eventVar.timeout < -10) {
+            regionFire.img = "flame2.png";
+        }
+        else if (eventVar.timeout < 0) {
+            regionFire.img = "flame1.png";
+        }
+    
+        if (!regionBullet.enable) {
+            regionBullet.enable = true;
+        }
+
+        if (regionBullet.x > 2000) {
+            eventVar.current = "none";
+            return;
+        }
+        regionBullet.x += 300 * delta;
+    }
+}
 
 var currentRegion = NaN;
 function regionEnter(region, axe) {
@@ -130,11 +262,15 @@ function regionEnter(region, axe) {
     }
 
     if (region.interactEvent !== "none" && currentRegion !== region && region.enable) {
-        if (region.interactEvent === "stage3") {
-            gameVar.stage = "stage3";
+        if (region.interactEvent.includes("stage")) {
+            applyStage(region.interactEvent);
         }
         else if (region.interactEvent.includes("q")) {
             showInteractBtn(region);
+        }
+        else if (region.interactEvent.includes("event")) {
+            startEvent(region.interactEvent);
+            region.enable = false;
         }
         else {
             // NOTIONG ??
@@ -156,7 +292,6 @@ function leaveRegion(region) {
 export function updatePlayer(deltaTime) {
     if (regions == null) return 0;
     
-    // Previous movements
     const prevX = playerRect.x;
     const prevY = playerRect.y;
 
@@ -180,7 +315,7 @@ export function updatePlayer(deltaTime) {
         }
 
         // Limites monde X
-        playerRect.x = Math.max(0, Math.min(world.width - playerRect.width, playerRect.x));
+        playerRect.x = Math.max(0, Math.min(world.world1.width - playerRect.width, playerRect.x));
     }
     
     // Déplacement vertical
@@ -203,7 +338,7 @@ export function updatePlayer(deltaTime) {
         }
 
         // Limites monde Y
-        playerRect.y = Math.max(0, Math.min(world.height - playerRect.height, playerRect.y));
+        playerRect.y = Math.max(0, Math.min(world.world1.height - playerRect.height, playerRect.y));
     }
     
     // Direction
@@ -234,7 +369,7 @@ export function updateCamera() {
     // Sort à droite de la zone morte
     if (playerRect.x + playerRect.width > deadZoneRight) {
         camera.x = Math.min(
-            world.width - camera.width,
+            world.world1.width - camera.width,
             playerRect.x + playerRect.width -
             (camera.width + deadZoneWidth) / 2
         );
@@ -263,11 +398,19 @@ export function updatePlayerAnimation(deltaTime) {
     }
 }
 
-export function applyState(stage) {
+export let beforeStage = "none";
+export function applyStage(stage) {
+    init();
+
+    if (gameVar.stage !== "gameOver") {
+        beforeStage = gameVar.stage;
+    }
+
     window.gameVar.stage = stage;
 
     if (stage === "stage2")
-    {
+    {   
+        currentQ = 4;
         window.playerRect.x = 18;
         window.playerRect.y = 100;
 
@@ -275,9 +418,18 @@ export function applyState(stage) {
 
         camera.x = 0
         camera.y = 0
-        init();
-    }
-    else {
 
+        showJoystick();
+    }
+    else if (stage === "stage1") {
+        currentQ = 0;
+        hideJoystick();
+    }
+    else if (stage === "stage3") {
+        currentQ = 7;
+        hideJoystick();
+    }
+    else if (stage === "stage4") {
+        hideJoystick();
     }
 }

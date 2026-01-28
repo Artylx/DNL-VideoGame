@@ -1,30 +1,84 @@
 {
   "questions": [
     {
-      "title": "De quel couleur est le ciel ?",
+      "title": "In which battle did Omeo participate ?",
       "interactValue": "q1",
       "choice": [
-        { "text": "Bleu", "valid": true },
-        { "text": "Vert", "valid": false },
-        { "text": "Rouge", "valid": false }
+        { "text": "Gallipoli", "valid": true },
+        { "text": "Verdun", "valid": false },
+        { "text": "Somme", "valid": false }
       ]
     },
     {
-      "title": "Quelle est la capitale de la France ?",
+      "title": "How did we call the temporary care facility for wounded soldiers ?",
       "interactValue": "q2",
       "choice": [
-        { "text": "Lyon", "valid": false },
-        { "text": "Paris", "valid": true },
-        { "text": "Marseille", "valid": false }
+        { "text": "Medical camps field hospitals", "valid": true },
+        { "text": "Red Cross stations", "valid": false },
+        { "text": "Aid posts", "valid": false }
       ]
     },
     {
-      "title": "Combien font 1+1 ?",
+      "title": "When did Australia enter the First World ?",
       "interactValue": "q3",
       "choice": [
-        { "text": "7", "valid": false },
-        { "text": "2", "valid": true },
-        { "text": "9", "valid": false }
+        { "text": "August 2014", "valid": false },
+        { "text": "May 1765", "valid": false },
+        { "text": "August 1914", "valid": true }
+      ]
+    },
+    {
+      "title": "What was the ANZAC ?",
+      "interactValue": "q4",
+      "choice": [
+        { "text": "A Australian food restaurant chain", "valid": false },
+        { "text": "Australian and New Zealand Army Corps", "valid": true },
+        { "text": "Association of Australian and New Zealand soldiers", "valid": false }
+      ]
+    },
+    {
+      "title": "When did the Gallipoli campaign begin ?",
+      "interactValue": "q5",
+      "choice": [
+        { "text": "April 1915", "valid": true },
+        { "text": "April 2014", "valid": false },
+        { "text": "December 1917", "valid": false }
+      ]
+    },
+    {
+      "title": "What were the living conditions like for soldiers in the trenches ?",
+      "interactValue": "q6",
+      "choice": [
+        { "text": "Quite good", "valid": false },
+        { "text": "Horrible", "valid": true },
+        { "text": "Comfortable", "valid": false }
+      ]
+    },
+    {
+      "title": "How did soldiers communicate with their families during the war ?",
+      "interactValue": "q7",
+      "choice": [
+        { "text": "MORSE CODE", "valid": false },
+        { "text": "FaceTime", "valid": false },
+        { "text": "They wrote letters", "valid": true }
+      ]
+    },
+    {
+      "title": "What kinds of injuries were common during the Gallipoli campaign ?",
+      "interactValue": "q8",
+      "choice": [
+        { "text": "Electrocuted", "valid": false },
+        { "text": "Suicides", "valid": false },
+        { "text": "Artillery shells", "valid": true }
+      ]
+    },
+    {
+      "title": "Approximatively how many Australians died during the Gallipoli campaign ?",
+      "interactValue": "q9",
+      "choice": [
+        { "text": "8,700", "valid": true },
+        { "text": "1 million", "valid": false },
+        { "text": "10 000", "valid": false }
       ]
     }
   ]
