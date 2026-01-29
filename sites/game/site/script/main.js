@@ -22,6 +22,9 @@ const ASSETS = {
     flame1: '/DNL-VideoGame/sites/game/site/assets/Flame1.png',
     flame2: '/DNL-VideoGame/sites/game/site/assets/Flame2.png',
     flame3: '/DNL-VideoGame/sites/game/site/assets/Flame3.png',
+    background1: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
+    background3: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
+    background4: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
 }; 
 
 function loadImage(src) { 
@@ -196,10 +199,90 @@ function render() {
         camera.width  = canvas.width  / renderScale;
         camera.height = canvas.height / renderScale;
 
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
         // scale écran
         ctx.scale(renderScale, renderScale);
+
+        const offsetX = (camera.width  - world.world1.width)  / 2;
+        const offsetY = (camera.height - world.world1.height) / 2;
+
+        ctx.translate(offsetX, offsetY);
+
+        // ===== BACKGROUND =====
+        if (assets?.background1 && window.drawing.background) {
+            ctx.drawImage(
+                assets.background1,
+                0,
+                0,
+                world.world1.width,
+                world.world1.height
+            );
+        }
+
     }
-      
+    else if (gameVar.stage === "stage3") {
+        let renderScale = Math.max(
+            canvas.width  / world.world3.width,
+            canvas.height / world.world3.height
+        );
+
+        camera.width  = canvas.width  / renderScale;
+        camera.height = canvas.height / renderScale;
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        // scale écran
+        ctx.scale(renderScale, renderScale);
+
+        const offsetX = (camera.width  - world.world3.width)  / 2;
+        const offsetY = (camera.height - world.world3.height) / 2;
+
+        ctx.translate(offsetX, offsetY);
+
+        // ===== BACKGROUND =====
+        if (assets?.background3 && window.drawing.background) {
+            ctx.drawImage(
+                assets.background3,
+                0,
+                0,
+                world.world3.width,
+                world.world3.height
+            );
+        }
+
+    }
+    else if (gameVar.stage === "stage4") {
+        let renderScale = Math.max(
+            canvas.width  / world.world4.width,
+            canvas.height / world.world4.height
+        );
+
+        camera.width  = canvas.width  / renderScale;
+        camera.height = canvas.height / renderScale;
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        // scale écran
+        ctx.scale(renderScale, renderScale);
+
+        const offsetX = (camera.width  - world.world4.width)  / 2;
+        const offsetY = (camera.height - world.world4.height) / 2;
+
+        ctx.translate(offsetX, offsetY);
+
+        // ===== BACKGROUND =====
+        if (assets?.background4 && window.drawing.background) {
+            ctx.drawImage(
+                assets.background4,
+                0,
+                0,
+                world.world4.width,
+                world.world4.height
+            );
+        }
+
+    }
 
     ctx.restore();
 }
@@ -225,8 +308,8 @@ function gameLoop(time) {
         
         if (gameVar.stage === "stage2") {
             updatePlayer(deltaTime);
-            updateCamera();
             updatePlayerAnimation(deltaTime);
+            updateCamera();
         }
         else if (gameVar.stage === "stage1") {
 

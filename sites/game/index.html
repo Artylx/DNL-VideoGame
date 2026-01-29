@@ -9,20 +9,108 @@
         <title>DNL - Game</title>
 
         <style>
-        </style>
-        <script>
+            .iframe-wrapper {
+                position: relative;
+                width: 95%;
+                height: calc(90vh - 1.4rem);
+            }
 
-        </script>
+            .iframe-wrapper iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 12px;
+            }
+
+            .fullscreen-btn {
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                width: 46px;
+                height: 46px;
+                border: none;
+                border-radius: 12px;
+                background: rgba(20, 20, 20, 0.65);
+                cursor: pointer;
+                z-index: 10;
+                backdrop-filter: blur(8px);
+                box-shadow:
+                    inset 0 0 0 1px rgba(255,255,255,0.12),
+                    0 8px 24px rgba(0,0,0,0.35);
+                transition: transform 0.2s ease, background 0.2s ease;
+            }
+
+            /* 4 coins fullscreen */
+            .fullscreen-btn::before,
+            .fullscreen-btn::after {
+                content: "";
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                border: 2px solid white;
+            }
+
+            /* coin haut gauche + bas droit */
+            .fullscreen-btn::before {
+                top: 11px;
+                left: 11px;
+                border-right: none;
+                border-bottom: none;
+            }
+
+            /* coin haut droit + bas gauche */
+            .fullscreen-btn::after {
+                bottom: 11px;
+                right: 11px;
+                border-left: none;
+                border-top: none;
+            }
+
+            /* Hover */
+            .fullscreen-btn:hover {
+                background: rgba(20, 20, 20, 0.85);
+                transform: scale(1.06);
+            }
+
+            /* Active */
+            .fullscreen-btn:active {
+                transform: scale(0.95);
+            }
+        </style>
         
         <link rel="stylesheet" type="text/css" href="/DNL-VideoGame/styles/global-style.css">
     </head>
     
     <body style="visibility: hidden;">
         <h1>Jeu de DNL</h1>
-        <iframe src="/DNL-VideoGame/sites/game/site/index.html" title="DNL Game" style="width: 95%; height: 90vh; border: none;"></iframe>
+        <div class="iframe-wrapper">
+            <iframe
+                id="gameFrame"
+                src="/DNL-VideoGame/sites/game/site/index.html"
+                title="DNL Game">
+            </iframe>
+
+            <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Plein écran"></button>
+        </div>
     </body>
 
     <!-- SCRIPTS BASIC -->
     <script src="/DNL-VideoGame/scripts/loading.js"></script>
     <script src="/DNL-VideoGame/scripts/qrcode.js"></script>
+    <script>
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
+        const wrapper = document.querySelector(".iframe-wrapper");
+
+        fullscreenBtn.addEventListener("click", () => {
+            if (!document.fullscreenElement) {
+                wrapper.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+            fullscreenBtn.textContent = document.fullscreenElement ? "🡼" : "⛶";
+        });
+    </script>
 </html>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { input, hideJoystick, showJoystick } from './controls.js';
-=======
-import { input, updateJoystick } from './controls.js';
->>>>>>> 3de65397ea003559ac6298c6879f20a514232a62
 
 export let playerRect = {
     x: 18,
@@ -51,30 +47,33 @@ export const playerAnim = {
 };
 
 export const world = {
-<<<<<<< HEAD
     world1: {
         width: 500,
-        height: 200,
+        height: 100,
     },
     world2: {
         width: 1000,
         height: 200,
     },
     world3: {
-
+        width: 500,
+        height: 100,
+    },
+    world3: {
+        width: 500,
+        height: 100,
+    },
+    world4: {
+        width: 500,
+        height: 100,
     }
 }
-=======
-    width: 1000,
-    height: 200,
-};
->>>>>>> 3de65397ea003559ac6298c6879f20a514232a62
 
 export const camera = {
     x: 0,
     y: 0,
-    width: world.world1.width,
-    height: world.world1.height
+    width: world.world2.width,
+    height: world.world2.height
 };
 
 const interactBtn = document.querySelector(".interact-content");
@@ -153,7 +152,7 @@ function startQuestion(interactValue) {
     }
     return false;
 }
-interactBtn.addEventListener("click", btnInteractEvent());
+interactBtn.addEventListener("click", btnInteractEvent);
 
 const EVENT_BULLET = "event1";
 let eventVar = {
@@ -274,7 +273,21 @@ function regionEnter(region, axe) {
 
     if (region.interactEvent !== "none" && currentRegion !== region && region.enable) {
         if (region.interactEvent.includes("stage")) {
-            applyStage(region.interactEvent);
+            if (region.interactEvent === "stage3") {
+                const activeRegions = regions.filter(r =>
+                    r.interactEvent.includes("q") && r.enable
+                );
+
+                if (activeRegions.length > 3) {
+                    setText("Vous devez d'abord sauver tous les soldats. (" + activeRegions.length + " restants)");
+                }
+                else {
+                    applyStage(region.interactEvent);
+                }
+            }
+            else {
+                applyStage(region.interactEvent);
+            }
         }
         else if (region.interactEvent.includes("q")) {
             showInteractBtn(region);
@@ -298,6 +311,10 @@ function regionEnter(region, axe) {
 function leaveRegion(region) {
     currentRegion = NaN;
     interactBtn.style.visibility = "hidden";
+
+    if (region.interactEvent === "stage3") {
+        setText("");
+    }
 }
 
 export function updatePlayer(deltaTime) {
@@ -326,7 +343,7 @@ export function updatePlayer(deltaTime) {
         }
 
         // Limites monde X
-        playerRect.x = Math.max(0, Math.min(world.world1.width - playerRect.width, playerRect.x));
+        playerRect.x = Math.max(0, Math.min(world.world2.width - playerRect.width, playerRect.x));
     }
     
     // Déplacement vertical
@@ -349,7 +366,7 @@ export function updatePlayer(deltaTime) {
         }
 
         // Limites monde Y
-        playerRect.y = Math.max(0, Math.min(world.world1.height - playerRect.height, playerRect.y));
+        playerRect.y = Math.max(0, Math.min(world.world2.height - playerRect.height, playerRect.y));
     }
     
     // Direction
@@ -365,14 +382,13 @@ export function updatePlayer(deltaTime) {
 
 const DEAD_ZONE_RATIO = 0;
 export function updateCamera() {
-    
     if (DEAD_ZONE_RATIO === 0) {
         camera.x = Math.min(
             Math.max(
                 playerRect.x + playerRect.width / 2 - camera.width / 2,
                 0
             ),
-            world.width - camera.width
+            world.world2.width - camera.width
         );
         return;
     }
@@ -392,7 +408,7 @@ export function updateCamera() {
     // Sort à droite de la zone morte
     if (playerRect.x + playerRect.width > deadZoneRight) {
         camera.x = Math.min(
-            world.world1.width - camera.width,
+            world.world2.width - camera.width,
             playerRect.x + playerRect.width -
             (camera.width + deadZoneWidth) / 2
         );
@@ -427,8 +443,8 @@ export let beforeStage = "none";
 export function applyStage(stage) {
     init();
 
-    if (gameVar.stage !== "gameOver") {
-        beforeStage = gameVar.stage;
+    if (stage !== "gameOver") {
+        beforeStage = stage;
     }
 
     window.gameVar.stage = stage;
@@ -455,6 +471,7 @@ export function applyStage(stage) {
         hideJoystick();
     }
     else if (stage === "stage4") {
+        setText("Félicitations ! Vous avez terminé le jeu.");
         hideJoystick();
     }
 }
