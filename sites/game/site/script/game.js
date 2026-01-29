@@ -278,7 +278,7 @@ function regionEnter(region, axe) {
                     r.interactEvent.includes("q") && r.enable
                 );
 
-                if (activeRegions.length > 3) {
+                if (activeRegions.length > 0) {
                     setText("Vous devez d'abord sauver tous les soldats. (" + activeRegions.length + " restants)");
                 }
                 else {

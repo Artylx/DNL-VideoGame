@@ -1,66 +1,74 @@
+// Supprime un QR code existant
+function removeOldQRCode() {
+    const oldButton = document.querySelector(".qrcode-button");
+    const oldContainer = document.querySelector(".qrcode-container");
+    if (oldButton) oldButton.remove();
+    if (oldContainer) oldContainer.remove();
+}
+
+// Gestion image manquante
 function handleMissingQR() {
     console.clear();
     const img = document.querySelector(".qrcode-image img");
-    img.src = "/DNL-VideoGame/assets/img_error.png";
+    if (img) img.src = "/DNL-VideoGame/assets/img_error.png";
 
-    document.querySelector(".upload-btn").innerHTML = "<p>Le QR Code est manquant.</p>";
+    const uploadBtn = document.querySelector(".upload-btn");
+    if (uploadBtn) uploadBtn.innerHTML = "<p>Le QR Code est manquant.</p>";
 }
 
+// Initialise le QR code pour une page donnée
 function init_qrcode(link_str) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "/DNL-VideoGame/styles/style-qrcode.css";
+    // Supprime l’ancien QR code
+    removeOldQRCode();
 
-    document.head.appendChild(link);
+    // Ajoute le CSS si pas déjà présent
+    if (!document.querySelector('link[href="/DNL-VideoGame/styles/style-qrcode.css"]')) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "/DNL-VideoGame/styles/style-qrcode.css";
+        document.head.appendChild(link);
+    }
 
+    // Crée le bouton
     const qrButton = document.createElement("div");
-    document.body.appendChild(qrButton);
-
     qrButton.classList.add("qrcode-button");
     qrButton.innerHTML = '<img class="icon-qrcode" src="/DNL-VideoGame/assets/qrcode/icon.png" alt="QR Code Icon">';
+    document.body.appendChild(qrButton);
 
+    // Crée le container
     const qrContainer = document.createElement("div");
-    document.body.appendChild(qrContainer);
-
     qrContainer.classList.add("qrcode-container");
     qrContainer.innerHTML = `
         <div class="qrcode-content">
             <button class="close-btn" aria-label="Close QR Code Viewer"></button>
             <div class="qrcode-image">
-                <img src="/DNL-VideoGame/assets/qrcode/` + link_str + `" alt="QR Code to access the game on mobile devices" onerror="handleMissingQR()">
+                <img src="/DNL-VideoGame/assets/qrcode/${link_str}" alt="QR Code" onerror="handleMissingQR()">
             </div>
-            <div class="upload-btn"><a href="/DNL-VideoGame/assets/qrcode/` + link_str + `" download="DNL_Game_QRCode.png" class="download-link">Télécharger le QR Code</a></div>
+            <div class="upload-btn">
+                <a href="/DNL-VideoGame/assets/qrcode/${link_str}" download="DNL_Game_QRCode.png" class="download-link">Télécharger le QR Code</a>
+            </div>
         </div>
     `;
-}
+    document.body.appendChild(qrContainer);
 
-if (window.location.href.includes("sites/game/index.html")) {
-    init_qrcode("game.png");
-}
-else if (window.location.href.includes("sites/chapter1/index.html")) {
-    init_qrcode("chapter1.png");
-}
-else if (window.location.href.includes("sites/chapter2/index.html")) {
-    init_qrcode("chapter2.png");
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const qrButton = document.querySelector(".qrcode-button");
-    const qrContainer = document.querySelector(".qrcode-container");
-
-    qrButton.addEventListener("click", function(e) {
-        if (e.target !== qrButton && !qrButton.contains(e.target)) {
-            return;
-        }
-
+    // Événements
+    qrButton.addEventListener("click", () => {
         qrContainer.style.top = "0px";
     });
 
-    qrContainer.addEventListener("click", function(e) {
-        if (e.target !== qrContainer && e.target !== document.querySelector(".close-btn")) {
-            return;
+    qrContainer.addEventListener("click", (e) => {
+        if (e.target === qrContainer || e.target.classList.contains("close-btn")) {
+            qrContainer.style.top = "-100vh";
         }
-        qrContainer.style.top = "-100vh";
     });
-});
+}
+
+// Met à jour le QR code selon le hash ou fallback
+function updateQRCode() {
+    const page = window.location.hash.substring(1) || "game";
+    init_qrcode(`${page}.png`);
+}
+
+// Initialisation
+updateQRCode();
+window.addEventListener("hashchange", updateQRCode);

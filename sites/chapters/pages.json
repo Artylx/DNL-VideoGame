@@ -1,0 +1,16 @@
+{
+    "pages": [
+        {
+            "hash": "chapter1",
+            "titleBtn": "Chapitre 1",
+            "title": "DNL - Chapitre 1",
+            "mainContent": "<h2>Bienvenue au Chapitre 1</h2><p>Plongez dans l'histoire fascinante de l'ANZAC de la Première Guerre mondiale.</p>"
+        },
+        {
+            "hash": "page5",
+            "titleBtn": "Page 5",
+            "title": "DNL - Page 5",
+            "mainContent": "<h2>Bienvenue à la Page 5</h2><p>Plongez dans l'histoire fascinante de l'ANZAC de la Première Guerre mondiale.</p>"
+        }
+    ]
+}

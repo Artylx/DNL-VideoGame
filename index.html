@@ -45,29 +45,51 @@
     <body>
         <p>Si la redirection vers l'autre page n'est pas automatique, rechargez la page ou selectionnez votre destination.</p>
         <h1>Redirection vers la page:</h1>
-        <div class="buttons-container">
-            <button onclick="redirect('#chapter1')">Chapitre 1</button>
-            <button onclick="redirect('#chapter2')">Chapitre 2</button>
-            <button onclick="redirect('#game')">Jeu</button>
-        </div>
-    </body>
-    <script>
-        function redirect(hash) {
-            if (hash == "#chapter1") {
-                window.location.href = "sites/chapter1/index.html";
-            } else if (hash == "#chapter2") {
-                window.location.href = "sites/chapter2/index.html";
-            } else if (hash == "#game") {
-                window.location.href = "sites/game/index.html";
-            } else {
-                console.warn("Hash non reconnu pour la redirection:", hash);
-            }
-        }
+        <div class="buttons-container" id="buttonsContainer">
+            <button onclick="window.location.href='sites/game/index.html'">Jeu</button>
 
-        document.addEventListener("DOMContentLoaded", function() {
-            if (window.location.hash) {
-                redirect(window.location.hash);
+            <!-- Les boutons seront ajoutés ici dynamiquement -->
+        </div>
+
+        <script>
+            async function loadRedirectButtons() {
+                try {
+                    const response = await fetch("sites/chapters/pages.json");
+                    if (!response.ok) throw new Error("Impossible de charger pages.json");
+
+                    const data = await response.json();
+                    const pages = data.pages;
+
+                    const container = document.getElementById("buttonsContainer");
+
+                    pages.forEach(page => {
+                        const btn = document.createElement("button");
+                        btn.textContent = page.titleBtn;
+                        btn.addEventListener("click", () => {
+                            window.location.href = `sites/chapters/index.html#${page.hash}`;
+                        });
+                        container.appendChild(btn);
+                    });
+
+                    // Redirection automatique si hash présent
+                    const currentHash = window.location.hash.substring(1);
+                    const currentPage = pages.find(p => p.hash === currentHash);
+                    if (currentPage) {
+                        window.location.href = `sites/chapters/index.html#${page.hash}`;
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    const container = document.getElementById("buttonsContainer");
+                    const msg = document.createElement("p");
+                    msg.textContent = "Erreur lors du chargement des pages.";
+                    container.appendChild(msg);
+                }
             }
-        });
-    </script>
+
+            document.addEventListener("DOMContentLoaded", loadRedirectButtons);
+        </script>
+    </body>
+
+    <script src="/DNL-VideoGame/scripts/loading.js"></script>
 </html>
