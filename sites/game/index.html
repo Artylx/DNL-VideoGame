@@ -77,6 +77,20 @@
             .fullscreen-btn:active {
                 transform: scale(0.95);
             }
+
+            .iframe-wrapper.fullscreen {
+                position: fixed;
+                inset: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 9999;
+                background: black;
+                border-radius: 0;
+            }
+
+            .iframe-wrapper.fullscreen iframe {
+                border-radius: 0;
+            }
         </style>
         
         <link rel="stylesheet" type="text/css" href="/DNL-VideoGame/styles/global-style.css">
@@ -102,16 +116,32 @@
         const fullscreenBtn = document.getElementById("fullscreenBtn");
         const wrapper = document.querySelector(".iframe-wrapper");
 
-        fullscreenBtn.addEventListener("click", () => {
-            if (!document.fullscreenElement) {
-                wrapper.requestFullscreen();
-            } else {
-                document.exitFullscreen();
+        fullscreenBtn.addEventListener("click", async () => {
+            // Si déjà en vrai fullscreen → sortir
+            if (document.fullscreenElement) {
+                await document.exitFullscreen();
+                return;
             }
+
+            // Tentative vrai fullscreen (desktop)
+            if (wrapper.requestFullscreen) {
+                try {
+                    await wrapper.requestFullscreen();
+                    return; // succès → on s'arrête
+                } catch (err) {
+                    // échec → on passe au fallback
+                    console.warn("Fullscreen refusé, fallback CSS", err);
+                }
+            }
+
+            // Fallback mobile / refus navigateur
+            wrapper.classList.toggle("fullscreen");
         });
 
         document.addEventListener("fullscreenchange", () => {
-            fullscreenBtn.textContent = document.fullscreenElement ? "🡼" : "⛶";
+            if (!document.fullscreenElement) {
+                wrapper.classList.remove("fullscreen");
+            }
         });
     </script>
 </html>
