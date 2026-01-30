@@ -279,7 +279,7 @@ function regionEnter(region, axe) {
                 );
 
                 if (activeRegions.length > 0) {
-                    setText("Vous devez d'abord sauver tous les soldats. (" + activeRegions.length + " restants)");
+                    setText("You have to save all the soldiers before. (" + activeRegions.length + " left)");
                 }
                 else {
                     applyStage(region.interactEvent);
@@ -471,7 +471,7 @@ export function applyStage(stage) {
         hideJoystick();
     }
     else if (stage === "stage4") {
-        setText("Congratulations ! You win the game.");
+        setText("Congratulations ! You have won the game.");
         hideJoystick();
     }
 }
