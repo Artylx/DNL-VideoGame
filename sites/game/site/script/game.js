@@ -279,7 +279,7 @@ function regionEnter(region, axe) {
                 );
 
                 if (activeRegions.length > 0) {
-                    setText("You have to save all the soldiers before. (" + activeRegions.length + " left)");
+                    setText("You have to save all the soldiers before. (still " + activeRegions.length + " left)");
                 }
                 else {
                     applyStage(region.interactEvent);
