@@ -471,7 +471,7 @@ export function applyStage(stage) {
         hideJoystick();
     }
     else if (stage === "stage4") {
-        setText("Félicitations ! Vous avez terminé le jeu.");
+        setText("Congratulations ! You win the game.");
         hideJoystick();
     }
 }
