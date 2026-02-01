@@ -22,7 +22,7 @@ const ASSETS = {
     flame1: '/DNL-VideoGame/sites/game/site/assets/Flame1.png',
     flame2: '/DNL-VideoGame/sites/game/site/assets/Flame2.png',
     flame3: '/DNL-VideoGame/sites/game/site/assets/Flame3.png',
-    background1: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
+    background1: '/DNL-VideoGame/sites/game/site/assets/stage1.png', 
     background3: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
     background4: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
 }; 

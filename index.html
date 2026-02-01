@@ -54,37 +54,42 @@
         <script>
             async function loadRedirectButtons() {
                 try {
-                    const response = await fetch("sites/chapters/pages.json");
-                    if (!response.ok) throw new Error("Impossible de charger pages.json");
+                        const response = await fetch("sites/chapters/pages.json");
+                        if (!response.ok) throw new Error("Impossible de charger pages.json");
 
-                    const data = await response.json();
-                    const pages = data.pages;
+                        const data = await response.json();
+                        const pages = data.pages;
 
-                    const container = document.getElementById("buttonsContainer");
+                        const container = document.getElementById("buttonsContainer");
 
-                    pages.forEach(page => {
-                        const btn = document.createElement("button");
-                        btn.textContent = page.titleBtn;
-                        btn.addEventListener("click", () => {
-                            window.location.href = `sites/chapters/index.html#${page.hash}`;
+                        pages.forEach(page => {
+                            const btn = document.createElement("button");
+                            btn.textContent = page.titleBtn;
+                            btn.addEventListener("click", () => {
+                                window.location.href = `sites/chapters/index.html#${page.hash}`;
+                            });
+                            container.appendChild(btn);
                         });
-                        container.appendChild(btn);
-                    });
 
-                    // Redirection automatique si hash présent
-                    const currentHash = window.location.hash.substring(1);
-                    const currentPage = pages.find(p => p.hash === currentHash);
-                    if (currentPage) {
-                        window.location.href = `sites/chapters/index.html#${page.hash}`;
+                        // Redirection automatique si hash présent
+                        const currentHash = window.location.hash.substring(1);
+                        const currentPage = pages.find(p => p.hash === currentHash);
+                        if (currentHash === "game") {
+                            window.location.href = 'sites/game/index.html';
+                            return;
+                        }
+                        if (currentPage) {
+                            window.location.href = `sites/chapters/index.html#${currentPage.hash}`;
+                            return;
+                        }
+
+                    } catch (err) {
+                        console.error(err);
+                        const container = document.getElementById("buttonsContainer");
+                        const msg = document.createElement("p");
+                        msg.textContent = "Erreur lors du chargement des pages.";
+                        container.appendChild(msg);
                     }
-
-                } catch (err) {
-                    console.error(err);
-                    const container = document.getElementById("buttonsContainer");
-                    const msg = document.createElement("p");
-                    msg.textContent = "Erreur lors du chargement des pages.";
-                    container.appendChild(msg);
-                }
             }
 
             document.addEventListener("DOMContentLoaded", loadRedirectButtons);

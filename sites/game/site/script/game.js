@@ -48,8 +48,8 @@ export const playerAnim = {
 
 export const world = {
     world1: {
-        width: 500,
-        height: 100,
+        width: 900,
+        height: 1600,
     },
     world2: {
         width: 1000,

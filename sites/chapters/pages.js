@@ -10,7 +10,7 @@ async function loadPages() {
         const pages = data.pages;
 
         // Récupère le hash sans le #
-        const pageName = window.location.hash.substring(1) || "game";
+        const pageName = window.location.hash.substring(1);
 
         // Cherche la page correspondant au hash
         const page = pages.find(p => p.hash === pageName);
