@@ -1,4 +1,7 @@
 async function loadPages() {
+    const div = document.querySelector(".container");
+    if (!div) return;
+
     try {
         const response = await fetch("/DNL-VideoGame/sites/chapters/pages.json");
 
@@ -16,11 +19,11 @@ async function loadPages() {
         const page = pages.find(p => p.hash === pageName);
 
         if (!page) {
-            showErrorPage();
+            showErrorPage(div);
             return;
         }
 
-        showPage(page);
+        showPage(page, div);
 
     } catch (error) {
         console.error(error);
@@ -37,7 +40,7 @@ function removeAll() {
     if (oldMain) oldMain.remove();
 }
 
-function showPage(page) {
+function showPage(page, div) {
     // Met à jour le titre de l'onglet et le h1
     document.title = page.title;
     const h1 = document.querySelector("h1");
@@ -49,10 +52,10 @@ function showPage(page) {
     const main = document.createElement("div");
     main.id = "mainContent";
     main.innerHTML = page.mainContent || ""; // injecte le HTML de mainContent
-    document.body.appendChild(main);
+    div.appendChild(main);
 }
 
-function showErrorPage() {
+function showErrorPage(div) {
     document.title = "404 - Page introuvable";
     const h1 = document.querySelector("h1");
     if (h1) h1.textContent = "404 - Page introuvable";
@@ -62,7 +65,7 @@ function showErrorPage() {
     const p = document.createElement("p");
     p.id = "page-description";
     p.textContent = "Le chapitre demandé n'existe pas.";
-    document.body.appendChild(p);
+    div.appendChild(p);
 }
 
 // Lancement initial

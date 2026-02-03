@@ -4,13 +4,15 @@
             "hash": "chapter1",
             "titleBtn": "Page 1",
             "title": "DNL - Chapter 1",
-            "mainContent": "<h2>Bienvenue au Chapitre 1</h2><p>Plongez dans l'histoire fascinante de l'ANZAC de la Première Guerre mondiale.</p><audio class=\"audio\" src=\"/DNL-VideoGame/sites/chapters/assets/speach-1.m4a\" controls></audio>"
+            "mainContent": "<h2>Welcome to Chapter 1</h2><p>Immerse yourself in the fascinating history of the ANZAC during World War I.</p><p class=\"subtitle\">Speech about the Anzac :</p><audio class=\"audio\" src=\"/DNL-VideoGame/sites/chapters/assets/speach-1.m4a\" controls></audio>",
+            "hide": false
         },
         {
             "hash": "chapter2",
             "titleBtn": "Page 2",
-            "title": "DNL - Chapitre 2",
-            "mainContent": "<h2>Bienvenue au Chapitre 2</h2><p>Plongez dans l'histoire fascinante de l'ANZAC de la Première Guerre mondiale.</p>"
+            "title": "DNL - Chapter 2",
+            "mainContent": "<h2>Welcome to Chapter 2</h2><p>Immerse yourself in the fascinating history of the ANZAC during World War I.</p>",
+            "hide": true
         }
     ]
 }

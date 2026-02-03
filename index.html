@@ -63,6 +63,8 @@
                         const container = document.getElementById("buttonsContainer");
 
                         pages.forEach(page => {
+                            if (page.hide) return;
+                            
                             const btn = document.createElement("button");
                             btn.textContent = page.titleBtn;
                             btn.addEventListener("click", () => {
