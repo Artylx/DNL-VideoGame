@@ -71,17 +71,6 @@
                             container.appendChild(btn);
                         });
 
-                        // Redirection automatique si hash présent
-                        const currentHash = window.location.hash.substring(1);
-                        if (currentHash === "game") {
-                            window.location.href = 'sites/game/index.html';
-                            return;
-                        }
-                        else {
-                            window.location.href = `sites/chapters/index.html#${currentHash}`;
-                            return;
-                        }
-
                     } catch (err) {
                         console.error(err);
                         const container = document.getElementById("buttonsContainer");
