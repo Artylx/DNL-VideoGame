@@ -73,13 +73,12 @@
 
                         // Redirection automatique si hash présent
                         const currentHash = window.location.hash.substring(1);
-                        const currentPage = pages.find(p => p.hash === currentHash);
                         if (currentHash === "game") {
                             window.location.href = 'sites/game/index.html';
                             return;
                         }
-                        if (currentPage) {
-                            window.location.href = `sites/chapters/index.html#${currentPage.hash}`;
+                        else {
+                            window.location.href = `sites/chapters/index.html#${currentHash}`;
                             return;
                         }
 

@@ -4,7 +4,7 @@ body {
 
 /* QR Code veiwer */
 .qrcode-button {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
 
@@ -19,7 +19,7 @@ body {
 .qrcode-button::after {
     content: "";
     position: absolute;
-    inset: -5px; /* équivalent à +10px centré */
+    inset: -5px;
     
     background-color: #b4b4b4aa;
     border-radius: 50%;
