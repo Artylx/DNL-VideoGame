@@ -64,8 +64,8 @@ export const world = {
         height: 100,
     },
     world4: {
-        width: 500,
-        height: 100,
+        width: 1150,
+        height: 2000,
     }
 }
 
@@ -97,6 +97,8 @@ function btnQcmEvent(question, r) {
     }
     else {
         gameVar.stage = "gameOver";
+
+        leaveRegion(currentRegion);
     }
 
     contentQcm.classList.remove("show");
@@ -155,6 +157,7 @@ function startQuestion(interactValue) {
 interactBtn.addEventListener("click", btnInteractEvent);
 
 const EVENT_BULLET = "event1";
+const EVENT_END = "eventEnd";
 let eventVar = {
     current: "none",
     timeout: 0,
@@ -216,6 +219,42 @@ export function eventTick(delta) {
             }
         }
     }
+    else if (gameVar.stage === "stage4") {
+        eventVar.time -= 10 * delta;
+
+        if (eventVar.time <= 0) {
+            eventVar.time = 20;
+            eventVar.current = EVENT_END;
+            eventVar.timeout = 50;
+
+            const regionEnd = regions.find(o => o.id === 28);
+            regionEnd.enable = false;
+        }
+
+        if (eventVar.current === "none") return;
+
+        switch (eventVar.current) {
+            case EVENT_END:
+                handleEndEvent(delta);
+                break;
+        }
+    }
+}
+
+function handleEndEvent(delta) {
+    const regionEnd = regions.find(o => o.id === 28);
+
+    if (!regionEnd) return;
+
+    // TO DO
+    eventVar.timeout -= 100 * delta;
+
+    if (eventVar.timeout > 0) {
+        regionEnd.enable = true;
+    }
+    else {
+        regionEnd.enable = false;
+    }
 }
 
 function handleBulletEvent(delta) {
@@ -223,6 +262,7 @@ function handleBulletEvent(delta) {
     const regionFire = regions.find(o => o.id === 27);
 
     if (!regionBullet) return;
+    if (!regionFire) return;
 
     eventVar.timeout -= 100 * delta;
     if (eventVar.timeout > 0) {
@@ -329,6 +369,7 @@ export function updatePlayer(deltaTime) {
     if (playerRect.colliable) {
         // Collision horizontale
         for (const o of regions) {
+            if (o.world !== 2) continue;
             if (
                 playerRect.x < o.x + o.width &&
                 playerRect.x + playerRect.width > o.x &&
@@ -352,6 +393,7 @@ export function updatePlayer(deltaTime) {
     if (playerRect.colliable) {
         // Collision verticale
         for (const o of regions) {
+            if (o.world !== 2) continue;
             if (
                 playerRect.y < o.y + o.height &&
                 playerRect.y + playerRect.height > o.y &&
@@ -439,39 +481,62 @@ export function updatePlayerAnimation(deltaTime) {
     }
 }
 
+function showCredits() {
+    const credits = document.querySelector(".credits");
+    credits.classList.remove("hide");
+    credits.classList.add("showStart");
+
+    setTimeout(() => {
+        credits.classList.remove("showStart");
+        credits.classList.add("show");
+    }, 100);
+}
+
+function hideCredits() {
+    const credits = document.querySelector(".credits");
+    credits.classList.remove("show");
+    credits.classList.add("hide");
+}
+
 export let beforeStage = "none";
 export function applyStage(stage) {
     init();
 
-    if (stage !== "gameOver") {
-        beforeStage = stage;
-    }
+    var previousStage = window.gameVar.stage;
 
     window.gameVar.stage = stage;
 
-    if (stage === "stage2")
-    {   
+    if (stage === "stage2") {   
         currentQ = 4;
         window.playerRect.x = 18;
         window.playerRect.y = 100;
-
         window.playerRect.direction = 'none';
 
-        camera.x = 0
-        camera.y = 0
+        camera.x = 0;
+        camera.y = 0;
 
         showJoystick();
     }
     else if (stage === "stage1") {
         currentQ = 0;
         hideJoystick();
+        hideCredits();
+        previousStage = "stage1";
     }
     else if (stage === "stage3") {
         currentQ = 7;
         hideJoystick();
     }
     else if (stage === "stage4") {
-        setText("Congratulations ! You have won the game.");
         hideJoystick();
+
+        if (previousStage !== "stage4") {
+            showCredits();
+        }
+    }
+
+    if (previousStage !== "gameOver") {
+        beforeStage = previousStage;
     }
 }
+

@@ -4,13 +4,14 @@ import { updatePlayer, updateCamera, playerRect, world, camera, regions, updateP
 // VARRIABLES
 const contentGameOver = document.querySelector(".menu-gameOver");
 const btnGameOver = document.querySelector(".restart.btn");
+const btnRestartCredits = document.querySelector(".restartCredit.btn");
 
 window.playerRect = playerRect;
 window.gameVar = gameVar;
 window.drawing = drawing;
 
 const ASSETS = { 
-    background: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
+    background2: '/DNL-VideoGame/sites/game/site/assets/background.png', 
     playerIdle: '/DNL-VideoGame/sites/game/site/assets/player_still.png', 
     playerWalk1: '/DNL-VideoGame/sites/game/site/assets/player_walk_1.png', 
     playerWalk2: '/DNL-VideoGame/sites/game/site/assets/player_walk_2.png',
@@ -23,8 +24,9 @@ const ASSETS = {
     flame2: '/DNL-VideoGame/sites/game/site/assets/Flame2.png',
     flame3: '/DNL-VideoGame/sites/game/site/assets/Flame3.png',
     background1: '/DNL-VideoGame/sites/game/site/assets/stage1.png', 
-    background3: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
-    background4: '/DNL-VideoGame/sites/game/site/assets/background.jpg', 
+    background3: '/DNL-VideoGame/sites/game/site/assets/background.png', 
+    background4: '/DNL-VideoGame/sites/game/site/assets/frame1_ending.png', 
+    frame2_ending: '/DNL-VideoGame/sites/game/site/assets/frame2_ending.png'
 }; 
 
 function loadImage(src) { 
@@ -72,6 +74,120 @@ function getPlayerImage() {
         : assets.playerWalk2;
 }
 
+function getImg(name) {
+    let image = NamedNodeMap;
+
+    switch (name) {
+        case "first_man.png":
+            image = assets.first_man;
+            break;
+        case "second_man.png":
+            image = assets.second_man;
+            break;
+        case "third_man.png":
+            image = assets.third_man;
+            break;
+        case "bullet.png":
+            image = assets.bullet;
+            break;
+        case "flame0.png":
+            image = assets.flame0;
+            break;
+        case "flame1.png":
+            image = assets.flame1;
+            break;
+        case "flame2.png":
+            image = assets.flame2;
+            break;
+        case "flame3.png":
+            image = assets.flame3;
+            break;
+        case "frame2_ending.png":
+            image = assets.frame2_ending;
+            break;
+    }
+
+    return image;
+}
+
+function drawRegions(ctx, index) {
+    regions.forEach(o => {
+        if (o.enable && o.world === index) {
+            if (window.drawing.regions) {
+                if (o.cancollide) {
+                    ctx.fillStyle = 'red';
+                }
+                else if (o.died) {
+                    ctx.fillStyle = 'blue';
+                }
+                else {
+                    ctx.fillStyle = 'gray';
+                }
+                ctx.fillRect(o.x, o.y, o.width, o.height);
+            }
+
+            if (o.img !== "none") {
+                const image = getImg(o.img);
+
+                if (image !== NamedNodeMap) {
+                    ctx.drawImage(
+                        image,
+                        o.x,
+                        o.y,
+                        o.width,
+                        o.height
+                    );
+                }
+            }
+        }
+    });
+}
+
+function drawPlayer(ctx) {
+    if (window.drawing.playerRect) {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
+    }
+    
+    if (window.drawing.player) {
+        const image = getPlayerImage();
+
+        const rationHeight = 6;
+
+        const drawX = playerRect.x - playerRect.width * 0.2;
+        const drawY = playerRect.y - playerRect.height * rationHeight;
+        const drawW = playerRect.width * 1.5;
+        const drawH = playerRect.height * (rationHeight + 1.3);
+
+        if (playerRect.direction === 'left') {
+            ctx.translate(drawX + drawW, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(image, 0, drawY, drawW, drawH);
+        } else {
+            ctx.drawImage(image, drawX, drawY, drawW, drawH);
+        }
+    } 
+}
+
+function drawBackground(ctx, index) {
+    const bgKey = `background${index}`;
+    const worldKey = `world${index}`;
+
+    if (
+        assets?.[bgKey] &&
+        world?.[worldKey] &&
+        window.drawing.background
+    ) {
+        ctx.drawImage(
+            assets[bgKey],
+            0,
+            0,
+            world[worldKey].width,
+            world[worldKey].height
+        );
+    }
+}
+
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -93,102 +209,13 @@ function render() {
         ctx.translate(-camera.x, -camera.y);
 
         // ===== BACKGROUND =====
-        if (assets?.background) {
-            if (window.drawing.background) {
-                ctx.drawImage(
-                    assets.background,
-                    0,
-                    0,
-                    world.world2.width,
-                    world.world2.height
-                );
-            }
-        }
+        drawBackground(ctx, 2);
 
         // regions
-        regions.forEach(o => {
-            if (o.enable) {
-                if (window.drawing.regions) {
-                    if (o.cancollide) {
-                        ctx.fillStyle = 'red';
-                    }
-                    else if (o.died) {
-                        ctx.fillStyle = 'blue';
-                    }
-                    else {
-                        ctx.fillStyle = 'gray';
-                    }
-                    ctx.fillRect(o.x, o.y, o.width, o.height);
-                }
-
-                if (o.img !== "none") {
-                    let image = NamedNodeMap;
-
-                    switch (o.img) {
-                        case "first_man.png":
-                            image = assets.first_man;
-                            break;
-                        case "second_man.png":
-                            image = assets.second_man;
-                            break;
-                        case "third_man.png":
-                            image = assets.third_man;
-                            break;
-                        case "bullet.png":
-                            image = assets.bullet;
-                            break;
-                        case "flame0.png":
-                            image = assets.flame0;
-                            break;
-                        case "flame1.png":
-                            image = assets.flame1;
-                            break;
-                        case "flame2.png":
-                            image = assets.flame2;
-                            break;
-                        case "flame3.png":
-                            image = assets.flame3;
-                            break;
-                    }
-
-                    if (image !== NamedNodeMap) {
-                        ctx.drawImage(
-                            image,
-                            o.x,
-                            o.y,
-                            o.width,
-                            o.height
-                        );
-                    }
-                }
-            }
-        });
+        drawRegions(ctx, 2);
         
-
         // player
-        if (window.drawing.playerRect) {
-            ctx.fillStyle = 'white';
-            ctx.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
-        }
-        
-        if (window.drawing.player) {
-            const image = getPlayerImage();
-
-            const rationHeight = 6;
-
-            const drawX = playerRect.x - playerRect.width * 0.2;
-            const drawY = playerRect.y - playerRect.height * rationHeight;
-            const drawW = playerRect.width * 1.5;
-            const drawH = playerRect.height * (rationHeight + 1.3);
-
-            if (playerRect.direction === 'left') {
-                ctx.translate(drawX + drawW, 0);
-                ctx.scale(-1, 1);
-                ctx.drawImage(image, 0, drawY, drawW, drawH);
-            } else {
-                ctx.drawImage(image, drawX, drawY, drawW, drawH);
-            }
-        } 
+        drawPlayer(ctx);
     }
     else if (gameVar.stage === "stage1") {
         let renderScale = Math.max(
@@ -210,15 +237,7 @@ function render() {
         ctx.translate(offsetX, offsetY);
 
         // ===== BACKGROUND =====
-        if (assets?.background1 && window.drawing.background) {
-            ctx.drawImage(
-                assets.background1,
-                0,
-                0,
-                world.world1.width,
-                world.world1.height
-            );
-        }
+        drawBackground(ctx, 1);
 
     }
     else if (gameVar.stage === "stage3") {
@@ -241,15 +260,7 @@ function render() {
         ctx.translate(offsetX, offsetY);
 
         // ===== BACKGROUND =====
-        if (assets?.background3 && window.drawing.background) {
-            ctx.drawImage(
-                assets.background3,
-                0,
-                0,
-                world.world3.width,
-                world.world3.height
-            );
-        }
+        drawBackground(ctx, 3);
 
     }
     else if (gameVar.stage === "stage4") {
@@ -272,16 +283,9 @@ function render() {
         ctx.translate(offsetX, offsetY);
 
         // ===== BACKGROUND =====
-        if (assets?.background4 && window.drawing.background) {
-            ctx.drawImage(
-                assets.background4,
-                0,
-                0,
-                world.world4.width,
-                world.world4.height
-            );
-        }
+        drawBackground(ctx, 4);
 
+        drawRegions(ctx, 4);
     }
 
     ctx.restore();
@@ -326,6 +330,8 @@ function gameLoop(time) {
 }
 
 btnGameOver.addEventListener('click', () => applyStage(beforeStage));
+btnRestartCredits.addEventListener('click', () => applyStage("stage1"));
+
 
 preloadAssets().then(loadedAssets => { 
     assets = loadedAssets;
