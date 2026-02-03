@@ -10,7 +10,7 @@
       ]
     },
     {
-      "title": "How did we call the temporary care facility for wounded soldiers ?",
+      "title": "How did people call the temporary care facility for wounded soldiers ?",
       "interactValue": "q2",
       "choice": [
         { "text": "Medical camps field hospitals", "valid": true },
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "title": "When did Australia enter the First World ?",
+      "title": "When did Australia enter the First World War ?",
       "interactValue": "q3",
       "choice": [
         { "text": "August 2014", "valid": false },
@@ -31,9 +31,9 @@
       "title": "What was the ANZAC ?",
       "interactValue": "q4",
       "choice": [
-        { "text": "A Australian food restaurant chain", "valid": false },
-        { "text": "Australian and New Zealand Army Corps", "valid": true },
-        { "text": "Association of Australian and New Zealand soldiers", "valid": false }
+        { "text": "An Australian food restaurant chain", "valid": false },
+        { "text": "The Australian and New Zealand Army Corps", "valid": true },
+        { "text": "An association of Australian and New Zealand soldiers", "valid": false }
       ]
     },
     {
@@ -64,12 +64,12 @@
       ]
     },
     {
-      "title": "What kinds of injuries were common during the Gallipoli campaign ?",
+      "title": "What kind of injuries did the soldiers suffer during the war?",
       "interactValue": "q8",
       "choice": [
-        { "text": "Electrocuted", "valid": false },
+        { "text": "Electrocution", "valid": false },
         { "text": "Suicides", "valid": false },
-        { "text": "Artillery shells", "valid": true }
+        { "text": "Artillery shell wounds", "valid": true }
       ]
     },
     {
